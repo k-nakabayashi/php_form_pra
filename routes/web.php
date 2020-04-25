@@ -2,8 +2,10 @@
 //コントローラーのアクション、か遷移先の割ああて
 
 $routingMap = [
-    'index' => '/view/welcom.php',
-    '/' => '/view/welcom.php',
+    'index' => 'welcom.php',
+    '' => 'welcom.php',
+    'welcom' => 'welcom.php',
+
     'confirmUser' => [
         'method' => 'POST',
         'controllerPath' => CONTROLLER_BASE.'FormController.php',

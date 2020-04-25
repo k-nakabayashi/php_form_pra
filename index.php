@@ -15,16 +15,27 @@ if ($_SERVER['REDIRECT_URL'] !== null) {
     if (isset($routingPare)) {
         $router = new Router($routingPare);
         $router->bootAction();
+    } else {
+        redirect();
     }
 
     //レスポンス
     $response = getResponse();
     $response->returnResponse();
-    
+
 } else {
     //直リンク
+    redirect();
 }
 
+function redirect()
+{
+    require_once($_SERVER['DOCUMENT_ROOT'].'/routes/web.php');
+    $routing_key = basename($_SERVER['REQUEST_URI']);
+    $uri = $routingMap[$routing_key];
+    header("Location:"."/view/".$uri);
+    exit;
+}
 function getRoutingPare ()
 {   
 
