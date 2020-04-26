@@ -1,7 +1,7 @@
 <?php
 //Main Role: ServiceProvider
 
-class MiddleWareClient {
+class MiddleWareService {
 
     private static $m_redirect = null;
     private $m_commandBefore = null;
