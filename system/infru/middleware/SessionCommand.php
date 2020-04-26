@@ -14,19 +14,30 @@ class SessionCommand extends MiddleWareCommand {
     public function handle()
     {
         $resultOK = false;
+        //設定
         $this->initializeSession();
-        $resultOK = true;
-        return $resultOK;
+        $this->setDatas();
+        
+        return true;
     }
 
 
     private function initializeSession ()
     {
-        session_save_path(SESSION_TMP_FILE);
-        ini_set('session.gc_maxlifetime', SESSION_LIFE);
-        ini_set('session.cookie_lifetime ', COOKIE_LIFE);
-        session_start();
-        session_regenerate_id();
+        
+        if (!isset($_SESSION)) {
+            session_save_path(SESSION_TMP_FILE);
+            ini_set('session.gc_maxlifetime', SESSION_LIFE);
+            ini_set('session.cookie_lifetime ', COOKIE_LIFE);
+            session_start();
+            session_regenerate_id();
+        }
+    }
+    
+    private function setDatas()
+    {
+        $_SESSION['REFERER'] = "OK";
+        $_SESSION['dataList'] = [];
     }
 
 }

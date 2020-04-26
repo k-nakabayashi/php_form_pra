@@ -46,7 +46,7 @@ class FormController extends Controller {
 
     private function createUser()
     {
-        $registerData = $this->m_formRequest->getParam();
+        $registerData = $this->m_formRequest->getParams();
         $resultOK = $this->m_user->create($registerData);
         if (!$resultOK) {
             return false;
@@ -75,7 +75,7 @@ class FormController extends Controller {
 
     private function validDuplicateEmail () {
 
-        $input_mail = $this->m_formRequest->getParam()['email'];
+        $input_mail = $this->m_formRequest->getParams()['email'];
 
         $noDuplication = $this->m_user->checkDuplicateEmail($input_mail);
         if ($noDuplication === true) {
@@ -84,9 +84,10 @@ class FormController extends Controller {
         return true;
     }
 
+    //api用
     public function checkDuplicationOfEmail () {
 
-        $input_mail = $this->m_formRequest->getParam()['email'];
+        $input_mail = $this->m_formRequest->getParams()['email'];
         $duplicated = $this->m_user->checkDuplicateEmail($input_mail);
           //返り値のjsonを決める
         $data = null;
@@ -95,14 +96,7 @@ class FormController extends Controller {
         } else {
             $data = 'false';
         }
-
-        setResponseParam(
-            [
-                'data' => $data,
-            ]
-        );
-
-        return;
+        addResponseParams ('result', $data);
     }
 
 

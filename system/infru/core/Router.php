@@ -59,11 +59,9 @@ class Router {
 ///////////////////////////////////////////////////////////////
 
     //以降、セッターとゲッターか各種設定
-
-
     private function redirect()
     {
-        $uri = $this->setRedirect();
+        $this->setRedirect();
         self::$m_response->returnResponse();
     }
     
@@ -73,7 +71,7 @@ class Router {
 
         //ミドルウェア失敗した時の遷移先
         $i_middleOK = getMiddleStatus();
-        if ($i_middleOK) {
+        if (!$i_middleOK) {
             return;
         }
 
@@ -96,8 +94,8 @@ class Router {
 
         $uri = self::$m_routingMap[$routing_key]['redirect'];
         setResponseRedirect($uri);
-        return $uri;
     }
+    
     private function getRoutingPare ()
     {   
         setRoutingMap();

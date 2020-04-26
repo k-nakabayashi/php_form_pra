@@ -5,15 +5,15 @@ require_once(UTILITY_BASE.'Validator.php');
 
 // class FormRequest extends Request {
 class FormRequest {
-    private $m_param;
+    private $m_params;
     
     public function __construct()
     {
-        $this->m_param = getRequestParam();
+        $this->m_params = getRequestParams();
     }
 
     public function checkCsrfToken () {
-        $token = $this->m_param['csrf_token'];
+        $token = $this->m_params['csrf_token'];
         $resultOK = false;
         return true;
     }
@@ -21,19 +21,19 @@ class FormRequest {
     public function startValidate()
     {
         //名前
-        $resultOK = $this->validateName($this->m_param['name']);
+        $resultOK = $this->validateName($this->m_params['name']);
         if (!$resultOK) {
             return false;
         }
         
         //メール
-        $resultOK = $this->validateEmail($this->m_param['email']);
+        $resultOK = $this->validateEmail($this->m_params['email']);
         if (!$resultOK) {
             return false;
         }
         
         //パスワード
-        $resultOK = $this->validatePassword($this->m_param['password']);
+        $resultOK = $this->validatePassword($this->m_params['password']);
         if (!$resultOK) {
             return false;
         }
@@ -105,8 +105,8 @@ class FormRequest {
     }
 
 
-    public function getParam()
+    public function getParams()
     {
-        return $this->m_param;
+        return $this->m_params;
     }
 }

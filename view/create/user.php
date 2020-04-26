@@ -2,12 +2,8 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/env.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/routes.php');
-$refererOK = $_SERVER['HTTP_REFERER'];
-if (empty($refererOK)) {
-    $path = 'Location:/root';
-    header($path);
-    exit;
-}
+require_once(UTILITY_BASE.'Session.php');
+initSession('/createUser');
 ?>
 
 <!DOCTYPE html>
@@ -107,6 +103,7 @@ if (empty($refererOK)) {
                 email: $i_email,
             }
         }).then(function (data) {
+            //結果の構造の調整が必要
             let result = data.data;
             if (result == 'false') {
                 window.alertError['email'] = window.error['MSG08'];

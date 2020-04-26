@@ -4,7 +4,7 @@
 
 require_once(CORE_BASE.'DataBaseManager.php');
 require_once(CORE_BASE.'Router.php');
-require_once(INFRU_MIDDLE_BASE.'MiddleWareClient.php');
+require_once(INFRU_MIDDLE_BASE.'MiddleWareService.php');
 
 class Container {
     static $m_router;
@@ -16,7 +16,7 @@ class Container {
     public function __construct ()
     {
         self::$m_router = new Router();
-        self::$m_middleware = new MiddleWareClient();
+        self::$m_middleware = new MiddleWareService();
     }
 
     public function bootAction ()

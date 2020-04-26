@@ -5,35 +5,53 @@
 require_once(UTILITY_BASE.'Helper.php');
 
 class Response {
-    static $m_param = [];
+    static $m_dataList = [
+        'params' => [],
+        'errors' => []
+    ];
     static $m_redirect;
 
     public function returnResponse () {
 
-        $this->setErrorMessages();
-     
-    
+        $this->setDataList();
+        
         //contollerのアクションへ跨る
+        
         //rootのindex.phpへ遷移
+        $path = "Location:";
+        if (self::$m_redirect === '/index.php') {
+            $path .= self::$m_redirect;
+        }
         //普通に遷移
-        header("Location:"."/view/".self::$m_redirect);//コントローラ間の移動ができない
+        $path .= "/view/".self::$m_redirect;
+
+        header( $path);
+        exit;
     }
 
+    static function setDataList()
+    {   
+       self::setErrorMessages();
+       if (isset($_SESSION['dataList'])) {
+        $_SESSION['dataList']['datas'] = self::$m_dataList['params'];
+        $_SESSION['dataList']['errors'] = self::$m_dataList['errors'];
+       }
+    }
     static function setErrorMessages()
     {   
         global $err_msg;
-        self::$m_param['errors'] = $err_msg;
+        self::$m_dataList['errors'] = $err_msg;
     }
 
     //以降、情報管理
-    public function addParam($i_key, $i_value)
+    public function addParams($i_key, $i_value)
     {
-        self::$m_param[$i_key] = $i_value;
+        self::$m_dataList['params'][$i_key] = $i_value;
     }
 
-    public function setParam($i_array)
+    public function setParams($i_array)
     {
-        self::$m_param = $i_array;
+        self::$m_dataList['params'] = $i_array;
     }
 
     public function setRedirect($i_value)
@@ -41,9 +59,9 @@ class Response {
         self::$m_redirect = $i_value;
     }
 
-    public function getParam()
+    public function getParams()
     {
-        return self::$m_param;
+        return self::$m_dataList;
     }
     public function getRedirect()
     {

@@ -46,9 +46,9 @@ function getRequestMethod()
     return Router::$m_request::$m_method;
 }
 
-function getRequestParam()
+function getRequestParams()
 {
-    return Router::$m_request::$m_param;
+    return Router::$m_request::$m_params;
 }
 
 //========================================
@@ -67,26 +67,24 @@ function setResponseRedirect($i_value)
     Router::$m_response->setRedirect($i_value);
 }
 
-function getResponseParam()
+function getResponseParams()
 {
-    return Router::$m_response->getParam();
+    return Router::$m_response->getParams();
 }
 
-function addResponseParam($i_key, $i_value)
+function addResponseParams($i_key, $i_value)
 {
-    Router::$m_response->addParam($i_key, $i_value);
+    Router::$m_response->addParams($i_key, $i_value);
 }
 
-function setResponseParam($i_array)
+function setResponseParams($i_array)
 {
-    Router::$m_response->setParam($i_array);
+    Router::$m_response->setParams($i_array);
 }
-
-
 
 //========================================
 // その他
-function getInstanceByPath($i_classPath, $i_param = null) {
+function getInstanceByPath($i_classPath, $i_params = null) {
     
     $existenceOK = file_exists($i_classPath);
     if (!$existenceOK) {
@@ -97,10 +95,10 @@ function getInstanceByPath($i_classPath, $i_param = null) {
     $className = basename($i_classPath);
     $className = substr( $className , 0 , strlen($className) - 4);
 
-    if ($i_param === null) {
+    if ($i_params === null) {
         return new $className();
     }
-    return new $className($i_param);
+    return new $className($i_params);
 }
 
 
