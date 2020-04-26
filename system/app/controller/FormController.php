@@ -10,14 +10,12 @@ class FormController extends Controller {
     private $m_formRequest;
     private $m_mailService;
     private $m_user;
-    private $m_response;
 
     public function __construct($i_acion)
     {
         parent::__construct($i_acion);
         $this->m_formRequest = new FormRequest();
         $this->m_user = new User();
-        $this->m_response = getResponse();
     }
 
     public function reqisgerUser()
@@ -36,13 +34,14 @@ class FormController extends Controller {
             return;
         }
 
-        return;
-        //認証用メール送信
-        $resultOK = $this->m_mailService->sendCertifyingMail();
-        if (!$resultOK) {
-            return;
-        }
-        return;
+        // return;
+        // //認証用メール送信
+        // $resultOK = $this->m_mailService->sendCertifyingMail();
+        // if (!$resultOK) {
+        //     return;
+        // }
+        
+        setResponseRedirect('create/confirm.php');
     }
 
     private function createUser()
@@ -50,7 +49,7 @@ class FormController extends Controller {
         $registerData = $this->m_formRequest->getParam();
         $resultOK = $this->m_user->create($registerData);
         if (!$resultOK) {
-            return se;
+            return false;
         }
         return true;
     }

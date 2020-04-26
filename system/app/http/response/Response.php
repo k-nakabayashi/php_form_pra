@@ -1,4 +1,7 @@
 <?php
+//Main Role: InformationHolder
+//Sub  Role: ServiceProvider
+
 require_once(UTILITY_BASE.'Helper.php');
 
 class Response {
@@ -8,7 +11,12 @@ class Response {
     public function returnResponse () {
 
         $this->setErrorMessages();
-        // header('Location::');
+     
+    
+        //contollerのアクションへ跨る
+        //rootのindex.phpへ遷移
+        //普通に遷移
+        header("Location:"."/view/".self::$m_redirect);//コントローラ間の移動ができない
     }
 
     static function setErrorMessages()

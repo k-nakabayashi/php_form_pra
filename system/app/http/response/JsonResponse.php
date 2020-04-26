@@ -1,4 +1,7 @@
 <?php
+//Main Role: InformationHolder(parent)
+//Sub  Role: ServiceProvider
+
 require_once(RESPONSE_BASE.'Response.php');
 
 class JsonResponse extends Response{

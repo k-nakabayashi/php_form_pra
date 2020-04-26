@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    welcom
-    <a href="/createUser">toForm</a>
+    <p>404エラー</p>
+    <p>指定のページは存在しません。</p>
 </body>
 </html>

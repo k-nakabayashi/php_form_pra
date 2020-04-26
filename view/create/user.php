@@ -1,6 +1,13 @@
 
 <?php
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/env.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/config/routes.php');
+$refererOK = $_SERVER['HTTP_REFERER'];
+if (empty($refererOK)) {
+    $path = 'Location:/root';
+    header($path);
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -13,9 +20,10 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/env.php');
     <?php include(HEAD);?>
 </head>
 <body>
+
     <div class="contianer">
-    <form method="POST" id="js-Form">
-        <!-- <form action="confirmUser"  method="POST" id="js-Form"> -->
+    <!-- <form method="POST" id="js-Form"> -->
+        <form action="confirmUser"  method="POST" id="js-Form">
             <label for="">
                 <p>名前</p>
                 <input type="text" name="name">
@@ -55,11 +63,12 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/env.php');
        
         event.preventDefault();
         $form = document.getElementById('js-Form');
-        let valideteOK = false;
-        valideteOK = startValidate($form);
-        if (valideteOK) {
-            // $form.submit();
-        }
+        $form.submit();
+        // let valideteOK = false;
+        // valideteOK = startValidate($form);
+        // if (valideteOK) {
+        //     $form.submit();
+        // }
     });
 
     //非同期のタイミング管理が必要

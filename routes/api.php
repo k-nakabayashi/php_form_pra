@@ -1,14 +1,4 @@
 <?php
-//コントローラーのアクション、か遷移先の割ああて
 
-$routingMap = [
-    'checkDuplicateEmail' => [
-        'method' => 'POST',
-        'controllerPath' => CONTROLLER_BASE.'FormController.php',
-        'action' => 'checkDuplicationOfEmail',
-    ],
-];
-
-define('ROUTING_MAP', $routingMap);
-
-
+require_once(CORE_BASE.'Route.php');
+Route::post('checkDuplicateEmail', 'FormController', 'checkDuplicationOfEmail');

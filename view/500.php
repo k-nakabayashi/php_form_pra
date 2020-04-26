@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    welcom
-    <a href="/createUser">toForm</a>
+    <p>500エラー</p>
+    <p>サーバーエラー</p>
 </body>
 </html>

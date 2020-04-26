@@ -1,18 +1,14 @@
 <?php
-//コントローラーのアクション、か遷移先の割ああて
+require_once(CORE_BASE.'Route.php');
 
-$routingMap = [
-    'index' => 'welcom.php',
-    '' => 'welcom.php',
-    'welcom' => 'welcom.php',
-
-    'confirmUser' => [
-        'method' => 'POST',
-        'controllerPath' => CONTROLLER_BASE.'FormController.php',
-        'action' => 'reqisgerUser',
-    ],
-];
-
-define('ROUTING_MAP', $routingMap);
+//初期設定
+Route::get('root');
+Route::get('404')->setRedirect('404.php');
+Route::get('index')->setRedirect('welcom.php');
+Route::get('/')->setRedirect('welcom.php');
+Route::get('welcom')->setRedirect('welcom.php');
 
 
+//追記
+Route::get('createUser')->setRedirect('create/user.php');
+Route::post('confirmUser', 'FormController', 'reqisgerUser');

@@ -8,7 +8,6 @@ abstract class Controller {
     public function bootAction () 
     {
         $action = $this->m_action;
-        $respnse = $this->$action();
-        return $respnse;
+        $this->$action();
     }
 }

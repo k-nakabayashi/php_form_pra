@@ -45,3 +45,9 @@
 セキュリティ
 * csrf
 * scriptInsertion
+
+
+各種ミドルウェアコマンド
+* 各種必要情報
+* 遷移先
+* handle()
