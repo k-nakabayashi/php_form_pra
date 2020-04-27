@@ -1,6 +1,7 @@
 <?php
 //セッションの有無・有効無効を知りたい
-require_once(INFRU_MIDDLE_BASE.'MiddleWareCommand.php');
+namespace infru\middleware;
+use infru\middleware\MiddleWareCommand;
 
 class SessionCommand extends MiddleWareCommand {
 

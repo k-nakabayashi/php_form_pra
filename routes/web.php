@@ -1,6 +1,5 @@
 <?php
-require_once(CORE_BASE.'Route.php');
-
+use  infru\core\Route;
 
 Route::setWrapperMiddle(['group1', 'group2', 'test1'], 'test', function() {
 

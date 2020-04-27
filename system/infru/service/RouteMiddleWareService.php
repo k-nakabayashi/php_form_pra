@@ -1,4 +1,5 @@
 <?php
+namespace infru\service;
 
 class RouteMiddleWareService {
 

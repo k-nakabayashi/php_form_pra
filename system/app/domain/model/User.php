@@ -1,5 +1,6 @@
 <?php
-require_once(MODEL_BASE.'Model.php');
+namespace app\domain;
+use app\domain\Model;
 
 class User extends Model {
     private $m_table = 'users';

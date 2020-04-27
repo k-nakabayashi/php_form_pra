@@ -1,5 +1,7 @@
 <?php
-class Request {
+namespace app\http\request;
+
+class RootRequest {
     static $m_actionOK = true;
     static $m_method;
     static $m_params = [];

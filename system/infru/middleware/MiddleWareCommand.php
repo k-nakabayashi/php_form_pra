@@ -1,4 +1,5 @@
 <?php
+namespace infru\middleware;
 
 abstract class MiddleWareCommand
 {

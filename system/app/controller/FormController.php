@@ -1,11 +1,13 @@
 <?php
+namespace app\Controller;
 require_once(UTILITY_BASE.'Helper.php');
-require_once(CONTROLLER_BASE.'Controller.php');
-require_once(REQUEST_BASE.'FormRequest.php');
-require_once(MODEL_BASE.'User.php');
+
+use app\Controller\RootController;
+use app\http\request\FormRequest;
+use app\domain\User;
 
 //会員登録の処理
-class FormController extends Controller {
+class FormController extends RootController {
 
     private $m_formRequest;
     private $m_mailService;

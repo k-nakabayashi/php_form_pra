@@ -1,0 +1,17 @@
+{
+    "name": "user-test/php-test-autoload",
+    "authors": [
+        {
+            "name": "user-test",
+            "email": "user-test@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "infru\\": "system/infru/",
+            "app\\": "system/app/"
+          
+         }
+    }
+}

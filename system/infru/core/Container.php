@@ -1,9 +1,11 @@
 <?php
+namespace infru\core;
+
 //Main Role: Construtor
 //Sub  Role: Cordinator
-require_once(CORE_BASE.'Router.php');
-require_once(CORE_BASE.'DataBaseManager.php');
-require_once(INFRU_SERVICE.'MiddleWareService.php');
+use infru\core\Router;
+use infru\core\DataBaseManager;
+use infru\service\MiddleWareService;
 
 class Container {
     static $m_router;

@@ -1,6 +1,6 @@
 <?php
 //セッションの有無・有効無効を知りたい
-
+namespace infru\middleware;
 class Auth {
 
   private $m_loginDate;

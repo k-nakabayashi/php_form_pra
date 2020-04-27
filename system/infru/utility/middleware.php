@@ -1,6 +1,9 @@
 <?php
-require_once(CORE_BASE.'Container.php');
-require_once(CORE_BASE.'Router.php');
+
+use infru\core\Container;
+use infru\core\Router;
+use infru\Service\RouteMiddleWareService;
+
 require_once(INFRU_SERVICE.'RouteMiddleWareService.php');
 
 function getTargetMiddleWare() {

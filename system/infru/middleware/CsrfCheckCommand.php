@@ -1,6 +1,8 @@
 <?php
 //フォームからリクエスト時に使用
-require_once(INFRU_MIDDLE_BASE.'MiddleWareCommand.php');
+namespace infru\middleware;
+use infru\middleware\MiddleWareCommand;
+
 class CsrfCheckCommand extends MiddleWareCommand {
     
     public function __construct()

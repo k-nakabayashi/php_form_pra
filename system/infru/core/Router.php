@@ -1,10 +1,13 @@
-
 <?php
+namespace infru\core;
+
 //Main Role: ServiceProvider( of Controller)
 //Sub  Role: Constructor
-
+require_once($_SERVER['DOCUMENT_ROOT'].'/config/env.php');
 require_once(UTILITY_BASE.'Helper.php');
-require_once(REQUEST_BASE.'Request.php');
+use app\http\request\RootRequest;
+use app\http\response\JsonResponse;
+use app\http\response\RootResponse;
 
 class Router {
 
@@ -18,7 +21,7 @@ class Router {
     public function __construct()
     {
         //http
-        self::$m_request = new Request();
+        self::$m_request = new RootRequest();
         $this->setResonse();
         
         //Routing 順はこのまま
@@ -30,11 +33,9 @@ class Router {
     private function setResonse() 
     {
         if($_REQUEST['route'] === 'api') {
-            require_once(RESPONSE_BASE.'JsonResponse.php');
             self::$m_response = new JsonResponse();
         }  else {
-            require_once(RESPONSE_BASE.'Response.php');
-            self::$m_response = new Response();
+            self::$m_response = new RootResponse();
         } 
     }
 /////////////////// Service メインロジック ////////////////////////////////////////////
@@ -149,7 +150,8 @@ class Router {
 
     private function createController($i_routingPare)
     {
-        $controllerPath = $i_routingPare['controller'];
+
+        $controllerPath = ''.$i_routingPare['controller'];
         $controller = getInstanceByPath($controllerPath, $i_routingPare['action']);
         return $controller;
     }

@@ -1,6 +1,8 @@
 <?php
-require_once(UTILITY_BASE.'Middleware.php');
 //Main Role: ServiceProvider
+namespace infru\service;
+require_once(UTILITY_BASE.'Middleware.php');
+
 
 class MiddleWareService {
 
@@ -60,7 +62,7 @@ class MiddleWareService {
         } else if($i_timing === 'after') {
             $commandList = $this->m_commandAfter[$i_type];
         }
-        if($commandList = null) {
+        if($commandList === null) {
             return true;
         }
         //処理
@@ -147,14 +149,14 @@ class MiddleWareService {
             $commandPath = $i_configMiddle[$key];
             if(gettype($commandPath) === 'array') {
                 foreach($commandPath as $innerCommandPath) {
-                    $existenceOK = file_exists($innerCommandPath);
+                    $existenceOK = class_exists($innerCommandPath);
                     if($existenceOK) {
                         array_push($o_commandList, $innerCommandPath);
                     }
                 }
                 continue;
             }
-            $existenceOK = file_exists($commandPath);
+            $existenceOK = class_exists($commandPath);
             if($existenceOK) {
                 array_push($o_commandList, $commandPath);
             }

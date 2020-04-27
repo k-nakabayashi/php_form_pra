@@ -1,6 +1,8 @@
 <?php
-require_once(CORE_BASE.'Container.php');
-require_once(CORE_BASE.'Router.php');
+
+use infru\core\Container;
+use infru\core\Router;
+
 //========================================
 // Container
 function createContainer() {
@@ -8,7 +10,7 @@ function createContainer() {
 }
 
 //========================================
-// DBコネクター
+// DB
 function getDB()
 {
     return Container::connectDB();
@@ -100,27 +102,15 @@ function setResponseParams($i_array)
 //========================================
 // その他
 function getInstanceByPath($i_classPath, $i_params = null) {
-    
-    $existenceOK = file_exists($i_classPath);
+    $existenceOK = class_exists($i_classPath);
     if(!$existenceOK) {
         return null;
     }
-
-    require_once($i_classPath);
-    $className = basename($i_classPath);
-    $className = substr( $className , 0 , strlen($className) - 4);
+    // $className = basename($i_classPath);
+    // $className = substr( $className , 0 , strlen($className) - 4);
 
     if($i_params === null) {
-        return new $className();
+        return new $i_classPath();
     }
-    return new $className($i_params);
+    return new $i_classPath($i_params);
 }
-
-
-// spl_autoload_register(function($class_name) {
-//     $path =  $_SERVER['DOCUMENT_ROOT'].$class_name.".php";
-//     require $path;
-//     if(file_exists($path)) {
-//       require $path;
-//     }
-// });

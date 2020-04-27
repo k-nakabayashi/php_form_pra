@@ -1,5 +1,7 @@
 <?php
-abstract class Controller {
+namespace app\Controller;
+
+abstract class RootController {
     protected $m_action;
     public function __construct($i_acion)
     {

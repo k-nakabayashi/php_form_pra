@@ -1,12 +1,14 @@
 <?php
+namespace infru\core;
+
 //Main Role: Contructor
 //Sub  Role: InformationHolder
 
 //Router.phpのroutingMapを作成する
 require_once(UTILITY_BASE.'Helper.php');
 require_once(UTILITY_BASE.'Middleware.php');
-require_once(CORE_BASE.'Router.php');
-require_once(INFRU_SERVICE.'RouteMiddleWareService.php');
+use infru\core\Router;
+use infru\service\RouteMiddleWareService;
 
 class Route {
     //コントローラーに渡すデータ
@@ -97,7 +99,9 @@ class Route {
         if($ctrlName == null) {
             return null;
         }
-        return CONTROLLER_BASE.$ctrlName.'.php';
+        $classPath = CONTROLLER_BASE."\\".$ctrlName;
+        return  $classPath;
+        // return CONTROLLER_BASE.$ctrlName.'.php';
     }
 
     public static function setWrapperMiddle($i_middleBefore = null, $i_middleAfter =null , $callBacks)

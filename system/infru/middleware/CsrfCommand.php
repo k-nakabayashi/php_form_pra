@@ -2,8 +2,9 @@
 //form生成ページで使用
 //webとapiで処理を分ける必要ある？
 //apiリクエストのたびに毎回トークン作るのはナンセンスかな？
+namespace infru\middleware;
+use infru\middleware\MiddleWareCommand;
 
-require_once(INFRU_MIDDLE_BASE.'MiddleWareCommand.php');
 class CsrfCommand extends MiddleWareCommand {
     
     public function __construct()

@@ -1,10 +1,11 @@
 <?php
+namespace app\http\request;
 require_once(UTILITY_BASE.'Helper.php');
 require_once(UTILITY_BASE.'Validator.php');
-// require_once(REQUEST_BASE.'Request.php');
+use app\http\request\RootRequest;
 
-// class FormRequest extends Request {
-class FormRequest {
+
+class FormRequest extends RootRequest {
     private $m_params;
     
     public function __construct()

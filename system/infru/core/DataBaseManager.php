@@ -1,4 +1,6 @@
 <?php
+namespace infru\core;
+
 class DataBaseManager {
     static $m_db = null;
 

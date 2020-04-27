@@ -1,10 +1,11 @@
 <?php
 //Main Role: InformationHolder
 //Sub  Role: ServiceProvider
+namespace app\http\response;
 
 require_once(UTILITY_BASE.'Helper.php');
 
-class Response {
+class RootResponse {
     static $m_dataList = [
         'params' => [],
         'errors' => []
