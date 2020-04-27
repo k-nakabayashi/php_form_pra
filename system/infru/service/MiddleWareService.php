@@ -6,7 +6,6 @@ require_once(UTILITY_BASE.'Middleware.php');
 
 class MiddleWareService {
 
-    private static $m_redirect = null;
     private $m_commandBefore = null;
     private $m_commandAfter = null;
 
@@ -73,7 +72,7 @@ class MiddleWareService {
             }
             if(!$resultOK) {
                 //結果リダイレクト先を設定する
-                self::$m_redirect = $command->m_redirect;
+                $command->failed();
                 break;
             }
         }
@@ -81,10 +80,7 @@ class MiddleWareService {
     }
 
 //////以下、設定//////////////////////////////////////////////////////////////////
-    public function setRedirect()
-    {
-        setResponseRedirect(self::$m_redirect);
-    }
+
 
     private function setCommands($i_middleTiming) {
 

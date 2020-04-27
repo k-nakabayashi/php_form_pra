@@ -40,9 +40,6 @@ class Container {
     {
         $middleOK = false;
         $middleOK = self::$m_middleware->executeBefore();
-        if(!$middleOK) {
-            self::$m_middleware->setRedirect();
-        } 
         return $middleOK;
     }
 
@@ -51,9 +48,6 @@ class Container {
     {
         if($i_middleOK) {
             $i_middleOK = self::$m_middleware->executeAfter();
-            if(!$i_middleOK) {
-                self::$m_middleware->setRedirect();
-            }
         }
     }
 

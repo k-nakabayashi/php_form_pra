@@ -7,8 +7,8 @@ class SessionCommand extends MiddleWareCommand {
 
     public function __construct()
     {
-        $m_redirect = null;
-        parent::__construct( $m_redirect);
+        $m_failRedirect = SERVER_ERROR;
+        parent::__construct($m_failRedirect);
     }
 
 
