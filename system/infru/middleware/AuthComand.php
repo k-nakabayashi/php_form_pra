@@ -12,12 +12,12 @@ class Auth {
     $this->initSesstion();
     $this->setLifeTime();
     $loginOK = $this->checkLoginStatus();
-    if ( $loginOK === true) {
+    if( $loginOK === true) {
       $this->updateLoginDate();
     }
   }
   
-  private function initSesstion () {
+  private function initSesstion() {
     session_save_path(SESSION_TMP_FILE);
     ini_set('session.gc_maxlifetime', SESSION_LIFE);
     ini_set('session.cookie_lifetime ', COOKIE_LIFE);
@@ -25,27 +25,27 @@ class Auth {
     session_regenerate_id();
   }
 
-  private  function setLifeTime ()
+  private  function setLifeTime()
   {
-    if (isset($_SESSION['login_date'])) {
+    if(isset($_SESSION['login_date'])) {
       $this->m_loginDate = $_SESSION['login_date'];
     } else {
       $this->m_loginDate = null;
     }
-    if (isset($_SESSION['login_limit'])) {
+    if(isset($_SESSION['login_limit'])) {
       $this->m_loginLimit = $_SESSION['login_limit'];
     } else {
       $this->m_loginLimit = null;
     }
   }
 
-  private function checkLoginStatus ()
+  private function checkLoginStatus()
   {
    
     if(!isset($this->getLoginDate)){
       $this->m_LoginStatus = false;
 
-    } else if( ($this->getLoginDate() + $this->getLoginLimit()) < time()){
+    } else if(($this->getLoginDate() + $this->getLoginLimit()) < time()){
 
       $this->m_LoginStatus = false;
       session_destroy(); 
@@ -57,20 +57,20 @@ class Auth {
     return $this->m_LoginStatus;
   }
 
-  private function updateLoginDate () {
+  private function updateLoginDate() {
     $_SESSION['login_date'] = time();
     $this->m_loginDate = $_SESSION['login_date'];
   }
 
 
 
-  public function getLoginDate () {
+  public function getLoginDate() {
     return $this->m_loginDate;
   }
-  public function getLoginLimit () {
+  public function getLoginLimit() {
     return $this->m_loginLimit;
   }
-  public function getLoginStatus () {
+  public function getLoginStatus() {
     return $this->m_LoginStatus;
   }
 }
