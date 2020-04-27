@@ -1,32 +1,45 @@
 <?php
+/////////////////////////////////
+$middleLocal = [
+    'test1' => initSession,
+    'test2' => 'commandPath',
+    'test3' => 'commandPath',
 
-//Before///////////////////////////////
-$middleBefore = [
-    'global' => [
+    'group1' => [
+        'group1__test1' => initSession,
+        'group1__test2' => initSession,
+        'group1__test3' => 'commandPath',
+    ],
+    'group2' => [
+        'group2__test1' => 'commandPath',
+        'group2__test2' => 'commandPath',
+        'group2__test3' => 'commandPath',
+    ],
+    'group3' => [
+        'commandPath',
+        'CONST_NAME',
+        'group3__test2' => 'commandPath',
+        'group3__test3' => 'commandPath',
+    ],
+];
+define('MIDDLE_LOCAL', $middleLocal);
+
+//////////////////////////////'///
+//Global
+$middleGlobal = [
+    'before' => [
         'initSession' => initSession,
-        'initSession2' => 'commandPath',
-        'initSession3' => 'commandPath',
+        'group1' => [
+            'group1__test1' => initSession,
+            'group1__test2' => initSession,
+            'group1__test3' => 'commandPath',
+        ],
     ],
-    'group' => [
-        'name' => 'commandPath'
+
+    'after' => [
+        'initSession' => initSession,
     ],
-    'local' => [
-        'name' => 'commandPath'
-    ]
+
 ];
 
-//After///////////////////////////////
-$middleAfter = [
-    'global' => [
-        'name' => 'commandPath'
-    ],
-    'group' => [
-        'name' => 'commandPath'
-    ],
-    'local' => [
-        'name' => 'commandPath'
-    ]
-];
-
-define('MIDDLE_BEFORE', $middleBefore);
-define('MIDDLE_AFTER', $middleAfter);
+define('MIDDLE_GLOBAL', $middleGlobal);

@@ -1,16 +1,19 @@
 
 <?php
-//Main Role: ServiceProvider
-//Sub  Role: Cordinator, Constructor
+//Main Role: ServiceProvider( of Controller)
+//Sub  Role: Constructor
 
 require_once(UTILITY_BASE.'Helper.php');
 require_once(REQUEST_BASE.'Request.php');
 
 class Router {
-    public $m_controller = null;
+
     public static $m_request;
     public static $m_response;
     public static $m_routingMap = [];
+
+    static $m_targetRoute;
+    private $m_controller = null;
 
     public function __construct()
     {
@@ -18,20 +21,32 @@ class Router {
         self::$m_request = new Request();
         $this->setResonse();
         
-        //自身
-        $routingPare = $this->getRoutingPare();
-        $this->setController($routingPare);
+        //Routing 順はこのまま
+        setRoutingMap();
+        $this->setTargetRoute();
+        $this->setController(self::$m_targetRoute);
     }
-/////////////////// Service with Cordinating ////////////////////////////////////////////
+    
+    private function setResonse() 
+    {
+        if($_REQUEST['route'] === 'api') {
+            require_once(RESPONSE_BASE.'JsonResponse.php');
+            self::$m_response = new JsonResponse();
+        }  else {
+            require_once(RESPONSE_BASE.'Response.php');
+            self::$m_response = new Response();
+        } 
+    }
+/////////////////// Service メインロジック ////////////////////////////////////////////
 
-    public function handleRequest ($i_middleOK = false)
+    public function handleRequest($i_middleOK = false)
     {
         $i_getDirectOK = false;
-        if (!empty($this->m_controller)) {
+        if(!empty($this->m_controller)) {
 
-            if ($i_middleOK) {
-            //アクション起動
-            $this->m_controller->bootAction();
+            if($i_middleOK) {
+                //アクション起動
+                $this->m_controller->bootAction();
             }
 
         } else {
@@ -46,7 +61,7 @@ class Router {
     {
            
         //直リンク
-        if ($i_getDirectOK) {
+        if($i_getDirectOK) {
             $this->redirect();
             exit;
         }
@@ -56,82 +71,66 @@ class Router {
         exit;
     }
 
-///////////////////////////////////////////////////////////////
 
-    //以降、セッターとゲッターか各種設定
+
+///////////////////Routing系////////////////////////////////////////////
+    private function setRedirect()
+    {
+    
+        $middleOK = getMiddleStatus();//ミドルウェア失敗した時の遷移先
+        $actionOK = getActionOK();//リクエスト失敗時
+        if(!($middleOK && $actionOK)) {
+            return;
+        }
+
+        $uri = self::$m_targetRoute['redirect'];
+        setResponseRedirect($uri);
+    }
+
     private function redirect()
     {
         $this->setRedirect();
         self::$m_response->returnResponse();
     }
-    
-    private function setRedirect()
-    {
-        $uri = null;
 
-        //ミドルウェア失敗した時の遷移先
-        $i_middleOK = getMiddleStatus();
-        if (!$i_middleOK) {
-            return;
-        }
+///////////////////以降、セッターとゲッターか各種設定////////////////////////////////////////////
+    private function setTargetRoute()
+    {         
+        $i_routingPare = null;
+        // $routingKey = basename($_SERVER['REDIRECT_URL']);
+        $pattern = $_SERVER['REDIRECT_URL'] !== null? 'REDIRECT_URL': 'REQUEST_URI';
+        $routingKey = $this->getRoutingKey($pattern);
+        self::$m_targetRoute = self::$m_routingMap[$routingKey];
 
-        $routing_key = $_SERVER['REQUEST_URI'];
+    }
+
+
+    private function getRoutingKey($i_uriPattern) {
+
+        $o_routingKey = $_SERVER[$i_uriPattern];
        
-        if ($routing_key !== "/") {
+        if($o_routingKey !== "/") {
 
-            $initial = substr( $routing_key  , 0 , 1);
+            $initial = substr( $o_routingKey  , 0 , 1);
              
             //階層構造があった時のため。
-            if ($initial === "/") {
-                $routing_key = ltrim($routing_key, "/");
-                $ctrlExistence = array_key_exists($routing_key, self::$m_routingMap);
+            if($initial === "/") {
+                $o_routingKey = ltrim($o_routingKey, "/");
+                $ctrlExistence = array_key_exists($o_routingKey, self::$m_routingMap);
 
-                if (!$ctrlExistence) {
-                    $routing_key = '404';
+                if(!$ctrlExistence) {
+                    $o_routingKey = '404';
                 }
             }
         }
 
-        $uri = self::$m_routingMap[$routing_key]['redirect'];
-        setResponseRedirect($uri);
-    }
-    
-    private function getRoutingPare ()
-    {   
-        setRoutingMap();
-        $controllMap = null;
-        $routingKey = basename($_SERVER['REDIRECT_URL']);
-
-        $ctrlExistence = false;
-
-        //存在確認
-        $ctrlExistence = self::$m_routingMap[$routingKey]['controller'] !== null? true : false;
-        
-        if (!$ctrlExistence) {
-            return null;
-        }
-
-        if ($ctrlExistence) {
-            $controllMap = self::$m_routingMap[$routingKey];
-            return $controllMap;
-        }
-        return null;
+        return $o_routingKey;
     }
 
-    private function setResonse () 
-    {
-        if ($_REQUEST['route'] === 'api') {
-            require_once(RESPONSE_BASE.'JsonResponse.php');
-            self::$m_response = new JsonResponse();
-        }  else {
-            require_once(RESPONSE_BASE.'Response.php');
-            self::$m_response = new Response();
-        } 
-    }
 
-    private function setController ($i_routingPare)
+    private function setController($i_routingPare)
     {        
-        if (empty($i_routingPare)) {
+        if(empty($i_routingPare)) {
             return null;
         }
         $methodExistence = $i_routingPare['method']? true: false;
@@ -140,7 +139,7 @@ class Router {
         $methodEqual = strcasecmp($method, $i_routingPare['method']);
         $methodEqual = $methodEqual === 0? true : false;
 
-        if ($methodExistence && $methodEqual) {
+        if($methodExistence && $methodEqual) {
             $this->m_controller = $this->createController($i_routingPare);
         } else {
             //エラーページへ。
@@ -148,21 +147,26 @@ class Router {
 
     }
 
-    private function createController ($i_routingPare)
+    private function createController($i_routingPare)
     {
         $controllerPath = $i_routingPare['controller'];
         $controller = getInstanceByPath($controllerPath, $i_routingPare['action']);
         return $controller;
     }
 
-    public static function setRoutingMap ($i_key, $i_array)
+///////////////////　ユーティリティ系　////////////////////////////////////////////
+    public static function setRoutingMap($i_key, $i_array)
     {
-        self::$m_routingMap[$i_key] = $i_array;
+        if(!isset(self::$m_routingMap[$i_key])) {
+            self::$m_routingMap[$i_key] = $i_array;
+        }
+        
     }
 
-    public static function setRedirectForRoutingMap ($i_uri, $i_redirect)
+    public static function setRedirectForRoutingMap($i_uri, $i_redirect)
     {
         self::$m_routingMap[$i_uri]['redirect'] = $i_redirect;
     }
     
+
 }

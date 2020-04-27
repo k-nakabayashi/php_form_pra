@@ -2,8 +2,8 @@
 class DataBaseManager {
     static $m_db = null;
 
-    static function connectDB () {
-        if (self::$m_db !== null) {
+    static function connectDB() {
+        if(self::$m_db !== null) {
             return self::$m_db;
         }
         //接続情報

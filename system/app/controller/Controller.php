@@ -5,7 +5,7 @@ abstract class Controller {
     {
         $this->m_action = $i_acion;
     }
-    public function bootAction () 
+    public function bootAction() 
     {
         $action = $this->m_action;
         $this->$action();

@@ -22,10 +22,10 @@ class SessionCommand extends MiddleWareCommand {
     }
 
 
-    private function initializeSession ()
+    private function initializeSession()
     {
         
-        if (!isset($_SESSION)) {
+        if(!isset($_SESSION)) {
             session_save_path(SESSION_TMP_FILE);
             ini_set('session.gc_maxlifetime', SESSION_LIFE);
             ini_set('session.cookie_lifetime ', COOKIE_LIFE);

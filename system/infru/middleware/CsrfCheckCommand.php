@@ -20,7 +20,7 @@ class CsrfCheckCommand extends MiddleWareCommand {
         return $resultOK;
     }
 
-    private function compareWithCsrfTokens ()
+    private function compareWithCsrfTokens()
     {
         $resultOK = false;
         return $resultOK;

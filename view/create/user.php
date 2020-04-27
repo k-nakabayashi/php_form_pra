@@ -51,18 +51,18 @@ initSession('/createUser');
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 <script>
-    $(function () {
+    $(function() {
 
 
     $submit = $('#js-Submit');
-    $submit.on('click', function (event) {
+    $submit.on('click', function(event) {
        
         event.preventDefault();
         $form = document.getElementById('js-Form');
         $form.submit();
         // let valideteOK = false;
         // valideteOK = startValidate($form);
-        // if (valideteOK) {
+        // if(valideteOK) {
         //     $form.submit();
         // }
     });
@@ -74,10 +74,10 @@ initSession('/createUser');
      
         checkEqualPass($i_form.password.value, $form.confirming_password.value);
         checkDuplicateEmail($i_form.email.value);
-        if (Object.keys(window.alertError).length !== 0) {
+        if(Object.keys(window.alertError).length !== 0) {
             
             let errorMessage = "";
-            for (let key in window.alertError) {
+            for(let key in window.alertError) {
                 errorMessage += "・" + window.alertError[key];
             }
             alert(errorMessage);
@@ -88,11 +88,11 @@ initSession('/createUser');
 
     function checkEqualPass(i_password, i_confirming_password){
         let equalOK = i_password == i_confirming_password? true : false;
-        if (!equalOK) {
+        if(!equalOK) {
             window.alertError['password'] = window.error['MSG03'];
         }
     }
-    function checkDuplicateEmail ($i_email) {
+    function checkDuplicateEmail($i_email) {
 
         $.ajax({
             type: 'post',
@@ -102,10 +102,10 @@ initSession('/createUser');
                 route: 'api',
                 email: $i_email,
             }
-        }).then(function (data) {
+        }).then(function(data) {
             //結果の構造の調整が必要
             let result = data.data;
-            if (result == 'false') {
+            if(result == 'false') {
                 window.alertError['email'] = window.error['MSG08'];
             }
         });

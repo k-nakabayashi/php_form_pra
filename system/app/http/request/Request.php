@@ -1,5 +1,6 @@
 <?php
 class Request {
+    static $m_actionOK = true;
     static $m_method;
     static $m_params = [];
 
@@ -7,5 +8,13 @@ class Request {
     {
         self::$m_method = $_SERVER['REQUEST_METHOD']? $_SERVER['REQUEST_METHOD'] : 'GET';
         self::$m_params = $_REQUEST;
+    }
+
+    public function successed() {
+        self::$m_actionOK = true;
+    }
+
+    public function failed() {
+        self::$m_actionOK = false;
     }
 }

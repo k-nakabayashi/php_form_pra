@@ -11,7 +11,7 @@ class Response {
     ];
     static $m_redirect;
 
-    public function returnResponse () {
+    public function returnResponse() {
 
         $this->setDataList();
         
@@ -19,7 +19,7 @@ class Response {
         
         //rootのindex.phpへ遷移
         $path = "Location:";
-        if (self::$m_redirect === '/index.php') {
+        if(self::$m_redirect === '/index.php') {
             $path .= self::$m_redirect;
         }
         //普通に遷移
@@ -32,7 +32,7 @@ class Response {
     static function setDataList()
     {   
        self::setErrorMessages();
-       if (isset($_SESSION['dataList'])) {
+       if(isset($_SESSION['dataList'])) {
         $_SESSION['dataList']['datas'] = self::$m_dataList['params'];
         $_SESSION['dataList']['errors'] = self::$m_dataList['errors'];
        }

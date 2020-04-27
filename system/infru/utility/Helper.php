@@ -18,16 +18,16 @@ function excuteSQL($i_sql, $i_data) {
 }
 //========================================
 // ミドルウェア
-function getMiddleStatus () {
+function getMiddleStatus() {
     return Container::$m_middleOK;
 }
 
 //========================================
 // ルーティング
-function setRoutingMap ()
+function setRoutingMap()
 {
     
-    if ($_REQUEST['route'] === 'api') {
+    if($_REQUEST['route'] === 'api') {
         require_once($_SERVER['DOCUMENT_ROOT'].'/routes/api.php');
     }  else {
         require_once($_SERVER['DOCUMENT_ROOT'].'/routes/web.php');
@@ -49,6 +49,21 @@ function getRequestMethod()
 function getRequestParams()
 {
     return Router::$m_request::$m_params;
+}
+
+function getActionOK()
+{
+    return Router::$m_request::$m_actionOK;
+}
+
+function successed()
+{
+    Router::$m_request::$m_actionOK = true;
+}
+
+function failed()
+{
+    Router::$m_request::$m_actionOK = false;
 }
 
 //========================================
@@ -87,7 +102,7 @@ function setResponseParams($i_array)
 function getInstanceByPath($i_classPath, $i_params = null) {
     
     $existenceOK = file_exists($i_classPath);
-    if (!$existenceOK) {
+    if(!$existenceOK) {
         return null;
     }
 
@@ -95,17 +110,17 @@ function getInstanceByPath($i_classPath, $i_params = null) {
     $className = basename($i_classPath);
     $className = substr( $className , 0 , strlen($className) - 4);
 
-    if ($i_params === null) {
+    if($i_params === null) {
         return new $className();
     }
     return new $className($i_params);
 }
 
 
-// spl_autoload_register(function ($class_name) {
+// spl_autoload_register(function($class_name) {
 //     $path =  $_SERVER['DOCUMENT_ROOT'].$class_name.".php";
 //     require $path;
-//     if (file_exists($path)) {
+//     if(file_exists($path)) {
 //       require $path;
 //     }
 // });

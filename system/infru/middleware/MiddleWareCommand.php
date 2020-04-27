@@ -7,7 +7,7 @@ abstract class MiddleWareCommand
 
   public function __construct($i_redirect)
   {
-    if (!empty($i_redirect)) {
+    if(!empty($i_redirect)) {
       $this->m_redirect = $i_redirect;
     }
   }

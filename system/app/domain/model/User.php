@@ -4,14 +4,14 @@ require_once(MODEL_BASE.'Model.php');
 class User extends Model {
     private $m_table = 'users';
 
-    public function index ()
+    public function index()
     {
 
     }
 
-    public function create ($i_data)
+    public function create($i_data)
     {
-        $sql = "INSERT INTO $this->m_table ( name, email, password, at_created) VALUES ( :name, :email, :password, :at_created)";
+        $sql = "INSERT INTO $this->m_table( name, email, password, at_created) VALUES( :name, :email, :password, :at_created)";
 
         $data = [
             ':name' => $i_data['name'], 
@@ -26,7 +26,7 @@ class User extends Model {
     public function show($i_id, $i_all = false)
     {   
         $sql = null;
-        if ($i_all) {
+        if($i_all) {
             $sql = "SELECT * FROM $this->m_table WHERE user_id = :user_id";
         } else {
             $sql = "SELECT * FROM $this->m_table WHERE user_id = :user_id AND delete_flg = 0";
@@ -52,7 +52,7 @@ class User extends Model {
     public function checkDuplicateEmail($i_email, $i_all = false)
     {   
         $sql = null;
-        if ($i_all) {
+        if($i_all) {
             $sql = "SELECT * FROM $this->m_table WHERE email = :email";
         } else {
             $sql = "SELECT * FROM $this->m_table WHERE email = :email AND delete_flg = 0";

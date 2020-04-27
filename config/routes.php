@@ -13,6 +13,7 @@ define('BASE_INFRU', $_SERVER['DOCUMENT_ROOT'].'/system/infru/');
 define('CORE_BASE', BASE_INFRU.'core/');
 define('UTILITY_BASE', BASE_INFRU.'utility/');
 define('INFRU_MIDDLE_BASE', BASE_INFRU.'middleware/');
+define('INFRU_SERVICE', BASE_INFRU.'service/');
 
 //views
 define('BASE_VIEW', $_SERVER['DOCUMENT_ROOT'].'/view/');
