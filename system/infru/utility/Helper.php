@@ -101,16 +101,13 @@ function setResponseParams($i_array)
 
 //========================================
 // その他
-function getInstanceByPath($i_classPath, $i_params = null) {
+function getInstanceByPath($i_classPath, $i_params1 = null, ...$i_params2) {
     $existenceOK = class_exists($i_classPath);
     if(!$existenceOK) {
         return null;
     }
-    // $className = basename($i_classPath);
-    // $className = substr( $className , 0 , strlen($className) - 4);
-
-    if($i_params === null) {
+    if($i_params1 === null) {
         return new $i_classPath();
     }
-    return new $i_classPath($i_params);
+    return new $i_classPath($i_params1, $i_params2);
 }

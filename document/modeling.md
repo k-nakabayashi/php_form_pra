@@ -51,3 +51,63 @@
 * 各種必要情報
 * 遷移先
 * handle()
+
+
+
+=============================================
+下記、認証系
+starategyパターン
+<認証Context>
+AuthenticateCommand
+* abstract handle()
+* initAuthentication()
+  * token = setToken()
+  * authentication(token)
+
+* checkAuthentication ()
+
+
+<認証Strategy>
+abstruct RootAuth
+* csrf
+* abstruct checkOther()
+* checkCsrf()
+* checkToken() {
+    return true;
+}
+* handle()
+    * checkCsrf()
+    * checkToken()
+
+WebAuth
+* checkOther()
+
+ApiAuth
+* checkOther()
+* checkToken()
+    * checkOther()
+
+-----------------------
+
+<トークンdata>
+
+
+abstrutct RootToken
+
+CsrfToken
+* token
+* lifeTime
+* compareToken()
+* createToken
+* setToken
+
+RequestToken →authenticationで使う
+* token(QueryParamater)
+* secret(forGettingAccessToken)
+* createToken()
+
+AccessToken →authorizationで使う
+* key→わからん
+* secret→わからん
+
+
