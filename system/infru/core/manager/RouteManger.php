@@ -16,7 +16,7 @@ class RouteManger {
     public static $m_response;
     public static $m_usecaseList = [];
 
-    static $m_targetRoute;
+    static $m_targetUsecase;
     private $m_controller = null;
 
     public function __construct()
@@ -24,25 +24,25 @@ class RouteManger {
         //http
         $factory = new RootFactory('app\\');
         self::$m_request = $factory->createItem('http\request\RootRequest');
-        self::$m_response = $factory->createItem($this->formatResonseName());
+        self::$m_response = $factory->createItem($this->getFormatedResonseName());
 
         //Routing 順はこのまま
         setRoutingMap();
-        $this->setTargetRoute();
-        $this->setController(self::$m_targetRoute->getUseCaseMap());
+        $this->setTargetUsecase();
+        $this->setController(self::$m_targetUsecase->getUseCaseMap());
     }
     
-    private function formatResonseName() 
+    private function getFormatedResonseName() 
     {
         $o_className = null;
         if($_REQUEST['route'] === 'api') {
             $o_className = "http\\response\JsonResponse";
         }  else {
             $o_className = "http\\response\RootResponse";
-            
         }
         return $o_className;
     }
+
 /////////////////// Service メインロジック ////////////////////////////////////////////
 
     public function handleRequest($i_middleOK = false)
@@ -92,19 +92,16 @@ class RouteManger {
             return;
         }
 
-        $uri = self::$m_targetRoute->getUseCaseMap()['redirect'];
+        $uri = self::$m_targetUsecase->getUseCaseMap()['redirect'];
         setResponseRedirect($uri);
     }
 
 ///////////////////以降、セッターとゲッターか各種設定////////////////////////////////////////////
-    private function setTargetRoute()
+    private function setTargetUsecase()
     {         
-        $i_routingPare = null;
-        // $routingKey = basename($_SERVER['REDIRECT_URL']);
         $pattern = $_SERVER['REDIRECT_URL'] !== null? 'REDIRECT_URL': 'REQUEST_URI';
         $usecaseName = $this->getUsecaseName($pattern);
-        self::$m_targetRoute = self::$m_usecaseList[$usecaseName];
-
+        self::$m_targetUsecase = self::$m_usecaseList[$usecaseName];
     }
 
     private function getUsecaseName($i_uriPattern) {

@@ -6,7 +6,7 @@ use infru\core\UseCaseMiddleWare;
 
 
 function getTargetMiddleWare() {
-    return RouteManger::$m_targetRoute->getUseCaseMap()['middleWare'];
+    return RouteManger::$m_targetUsecase->getUseCaseMap()['middleWare'];
 }
 function getMiddleWrapper() {
     return UseCaseMiddleWare::getMiddleWrapper();

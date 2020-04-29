@@ -20,11 +20,11 @@ class RootFactory {
     }
 
 //////// 以下 final ////////////////////////////////////////////////
-    final public function createItem($i_pattern)
+    final public function createItem($i_pattern, $i_params1 = null, ...$i_params2)
     {
         $o_item = null;
         $i_classPath = $this->getFomartedClassPath($i_pattern);
-        $o_item = $this->getInstanceByPath($i_classPath);
+        $o_item = $this->getInstanceByPath($i_classPath, $i_params1, ...$i_params2);
         return $o_item;
     }
 
