@@ -1,5 +1,5 @@
 <?php
-use infru\core\UseCase;
+use infru\core\usecase\UseCase;
 
 UseCase::setWrapperMiddle(['group1', 'group2', 'test1'], 'test', function() {
 

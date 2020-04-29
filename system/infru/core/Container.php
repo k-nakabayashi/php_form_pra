@@ -6,6 +6,7 @@ namespace infru\core;
 use infru\support\factory\RootFactory;
 
 class Container {
+    static $requestRoot = null;
     static $m_router = null;
     static $m_firewall = null;
     static $m_middleware = null;
@@ -20,6 +21,7 @@ class Container {
             return null;
         }
         self::$m_single = true;
+        $this->setRequestRoot();
         $factory = new RootFactory('infru\core\manager\\');
         self::$m_db = $factory->createItem('DataBaseManager');
         self::$m_router = $factory->createItem('RouteManger');
@@ -73,26 +75,51 @@ class Container {
         }
     }
 
-    public function connectDB()
+    public static function connectDB()
     {
-        if(self::$m_db === null) {
-            self::$m_db->connectDB();
-        }
+        self::$m_db->connectDB();
     }
 
     //query実行
-    public function excuteSQL($i_sql, $i_data)
+    public static function excuteSQL($i_sql, $i_data)
     {
-        if(self::$m_db === null) {
-            self::$m_db->connectDB();
-        }
-        $o_stmt = self::$m_db->excuteSQL(self::$m_db, $i_sql, $i_data);
+        $o_stmt = null;
+        $o_stmt = self::$m_db->excuteSQL($i_sql, $i_data);
         return $o_stmt;
     }
 
     public function getRouter()
     {
         return self::$m_router;
+    }
+
+    private function setRequestRoot()
+    {
+       
+
+        $m_requestRoot = "web";
+
+        //どこからきたかの判定
+        $list = [
+            'REDIRECT_URL',
+            'REQUEST_URI', 
+            'SCRIPT_NAME',
+        ];
+
+        $m_requestRoot = null;
+        $OK = false;
+        foreach ($list as $name) {
+            $OK = array_key_exists($name, $_SERVER);
+            if ($OK) {
+                $m_requestRoot = dirname($_SERVER[$name]);
+                break;
+            }
+        }
+        if ($m_requestRoot === "/api") {
+            $m_requestRoot = 'api';
+        }
+
+        self::$requestRoot = $m_requestRoot;
     }
 
 }

@@ -5,17 +5,30 @@ $queryNameList = [
     'accessKey', 'accessToken',//認可で使う
 ];
 
+$basicBlackList = [
+    'createUser',
+];
+
 $authorizationList = [
-    'actor' => ['blackList'],//基底クラス
     'user' => [
-        'level0' => ['whiteList'],
-        'level1' => ['whiteList'],
-        'level2' => ['whiteList'],
+        'common' => [
+            'createUser',
+        ],
+        'members' => [
+            'level0' => ['whiteList'],
+            'level1' => ['whiteList'],
+            'level2' => ['whiteList'],
+        ],
     ],
     'admin' => [
-        'level0' => ['whiteList'],
-        'level1' => ['whiteList'],
-        'level2' => ['whiteList'],
+        'common' => [
+            'createUser',
+        ],
+        'members' => [
+            'level0' => ['whiteList'],
+            'level1' => ['whiteList'],
+            'level2' => ['whiteList'],
+        ],
     ],
 ];
 //FireWall機能

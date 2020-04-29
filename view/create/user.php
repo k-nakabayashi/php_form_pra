@@ -59,9 +59,10 @@ initSession('/createUser');
        
         event.preventDefault();
         $form = document.getElementById('js-Form');
-        $form.submit();
-        // let valideteOK = false;
-        // valideteOK = startValidate($form);
+
+        let valideteOK = false;
+        valideteOK = startValidate($form);
+
         // if(valideteOK) {
         //     $form.submit();
         // }
@@ -74,6 +75,8 @@ initSession('/createUser');
      
         checkEqualPass($i_form.password.value, $form.confirming_password.value);
         checkDuplicateEmail($i_form.email.value);
+
+        return;
         if(Object.keys(window.alertError).length !== 0) {
             
             let errorMessage = "";
@@ -96,18 +99,18 @@ initSession('/createUser');
 
         $.ajax({
             type: 'post',
-            url: 'checkDuplicateEmail',
+            url: '/api/checkDuplicateEmail',
             dataType: 'json',
             data: {
-                route: 'api',
                 email: $i_email,
             }
         }).then(function(data) {
             //結果の構造の調整が必要
-            let result = data.data;
-            if(result == 'false') {
-                window.alertError['email'] = window.error['MSG08'];
-            }
+            console.log(data);
+            // let result = data.data;
+            // if(result == 'false') {
+            //     window.alertError['email'] = window.error['MSG08'];
+            // }
         });
     }
 

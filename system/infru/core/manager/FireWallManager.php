@@ -7,14 +7,14 @@ use infru\support\factory\AuthFactory;
 
 class FireWallManager {
     
-    private $authentication;
-    private $authorization;
+    private $authenticationWoker;
+    private $authorizationWoker;
 
     public function __construct()
     {
         $factory = new AuthFactory();
-        $this->authentication = $factory->createItem('authentication');
-        $this->authorization  = $factory->createItem('authorization');
+        $this->authenticationWoker = $factory->createItem('authentication');
+        $this->authorizationWoker  = $factory->createItem('authorization');
     }
 
     public function excute()
@@ -32,7 +32,7 @@ class FireWallManager {
     {
         $o_resultOK = false;
 
-        $o_resultOK = $this->authentication->excute();
+        $o_resultOK = $this->authenticationWoker->excute();
         return $o_resultOK;
     }
 
@@ -41,7 +41,7 @@ class FireWallManager {
         $o_resultOK = $i_resultOK;
 
         if ($o_resultOK) {
-            $o_resultOK = $this->authorization->excute();
+            $o_resultOK = $this->authorizationWoker->excute();
         }
         return $o_resultOK;
     }

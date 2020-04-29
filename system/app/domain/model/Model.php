@@ -1,7 +1,7 @@
 <?php
-namespace app\domain;
+namespace app\domain\model;
 
 require_once(UTILITY_BASE.'Helper.php');
-class Model {
+abstract class Model {
 
 }

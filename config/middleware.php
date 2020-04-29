@@ -37,9 +37,9 @@ $middleGlobal = [
         // ],
     ],
 
-    // 'after' => [
-    //     'initSession' => initSession,
-    // ],
+    'after' => [
+        'initSession' => initSession,
+    ],
 
 ];
 

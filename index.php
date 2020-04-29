@@ -7,7 +7,14 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/config/env.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/routes.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/message.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/middleware.php');
+require_once(UTILITY_BASE.'Env.php');
 require_once(UTILITY_BASE.'Helper.php');
+
+
+//デバッグ起動
+bootDebug();
+
+
 
 //コンテナクラス起動し各種設定を行う
 //1. ルーティングマップ作成(複数のルート使う場合があるため全て設定する)

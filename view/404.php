@@ -1,3 +1,7 @@
+<?php
+echo 11;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

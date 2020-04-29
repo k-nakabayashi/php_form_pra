@@ -1,5 +1,5 @@
 <?php
-use  infru\core\UseCase;
+use  infru\core\usecase\UseCase;
 
 //ブラウザから直アクセスか？
 //外部アプリからの経由か？
@@ -9,4 +9,5 @@ use  infru\core\UseCase;
 //アクセストーンによってできる内容が変わる
 
 //クエリ名をあらかじめ決めておく必要があるね
-UseCase::post('checkDuplicateEmail', 'FormController', 'checkDuplicationOfEmail');
+UseCase::post('api/checkDuplicateEmail', 'FormController', 'checkDuplicationOfEmail');
+UseCase::get('404');
