@@ -19,6 +19,7 @@ define('INFRU_SERVICE', BASE_INFRU.'service/');
 define('BASE_VIEW', $_SERVER['DOCUMENT_ROOT'].'/view/');
 define('HEAD', BASE_VIEW.'component/head.php');
 define('SERVER_ERROR', '500.php');
+define('ERROR_VIEW', 'error.php');
 define('INDEX_VIEW', '/index.php');
 
 //public

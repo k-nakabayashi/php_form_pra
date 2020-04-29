@@ -14,9 +14,10 @@ class FormRequest extends RootRequest {
     }
 
     public function checkCsrfToken() {
+        $o_resultOK = false;
         $token = $this->m_params['csrf_token'];
-        $resultOK = false;
-        return true;
+        $o_resultOK = false;
+        return $o_resultOK;
     }
 
     public function startValidate()

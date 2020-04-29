@@ -14,17 +14,17 @@ class CsrfCheckCommand extends MiddleWareCommand {
 
     public function handle()
     {
-        $resultOK = false;
+        $o_resultOK = false;
    
         //token比較
-        $resultOK = $this->compareWithCsrfTokens();
+        $o_resultOK = $this->compareWithCsrfTokens();
  
-        return $resultOK;
+        return $o_resultOK;
     }
 
     private function compareWithCsrfTokens()
     {
-        $resultOK = false;
-        return $resultOK;
+        $o_resultOK = false;
+        return $o_resultOK;
     }
 }

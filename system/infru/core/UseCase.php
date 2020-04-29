@@ -3,20 +3,20 @@ namespace infru\core;
 
 //Main Role: Contructor
 
-//Router.phpのroutingMapを作成する
+//RouteManger.phpのroutingMapを作成する
 require_once(UTILITY_BASE.'Helper.php');
 require_once(UTILITY_BASE.'Middleware.php');
-use infru\core\Router;
+use infru\core\manager\RouteManger;
 use infru\core\UseCaseMiddleWare;
 
 class UseCase {
-    //コントローラーに渡すデータ
-    private $m_data;
+    //クエリからコントローラーに渡すデータ
+    private $m_data;//未実装
 
     //middleWare設定
     private $middleService = null;
 
-    //Router用
+    //RouteManger用
     private static $_tmpName = null;
     private $m_usecaseMap;
 
@@ -31,9 +31,9 @@ class UseCase {
     public function __destruct()
     {
         $this->m_usecaseMap['middleWare']['single'] = $this->middleService->getMiddleSingle();
-        Router::setUseCase(self::$_tmpName, $this);
+        RouteManger::setUseCase(self::$_tmpName, $this);
         self::$_tmpName = null;
-        // Router::setRoutingMap($this->m_usecaseName, $this->m_usecaseMap);//これがメイン
+        // RouteManger::setRoutingMap($this->m_usecaseName, $this->m_usecaseMap);//これがメイン
     }
 
     public function withData($i_data)

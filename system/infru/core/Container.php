@@ -1,17 +1,16 @@
 <?php
-namespace infru\core;
-
 //Main Role: Cordinator
 //Sub  Role: Construtor
-use infru\core\Router;
-use infru\core\DataBaseManager;
-use infru\service\MiddleWareService;
+
+namespace infru\core;
+use infru\support\factory\RootFactory;
 
 class Container {
-    static $m_router;
-    static $m_middleware;
+    static $m_router = null;
+    static $m_firewall = null;
+    static $m_middleware = null;
     static $m_middleOK = false;
-    static $m_error;
+    static $m_error = null;
     static $m_db = null;
     public static $m_single = false;
 
@@ -21,20 +20,36 @@ class Container {
             return null;
         }
         self::$m_single = true;
-        self::$m_router = new Router();
-        self::$m_middleware = new MiddleWareService();
+        $factory = new RootFactory('infru\core\manager\\');
+        self::$m_db = $factory->createItem('DataBaseManager');
+        self::$m_router = $factory->createItem('RouteManger');
+        self::$m_firewall = $factory->createItem('FireWallManager');
+        self::$m_middleware = $factory->createItem('MiddleWareManeger');
     }
 
-    public function bootAction()
+    public function commandFirewall()
     {
+        $wirewallOK = false;
+        $wirewallOK = self::$m_firewall->excute();
+        return $wirewallOK;
+    }
+    
+    //handleResponseに直リンクかコントローラー経由かを知らせたい
+    public function bootAction($wirewallOK)
+    {
+        $getDirectOK = false;
 
-        //before
-        self::$m_middleOK = $this->executeBefore();
+        if ($wirewallOK) {
+            //before
+            self::$m_middleOK = $this->executeBefore();
+            $getDirectOK = self::$m_router->handleRequest(self::$m_middleOK);
+            //after
+            $this->executeAfter(self::$m_middleOK);
 
-        $getDirectOK = self::$m_router->handleRequest(self::$m_middleOK);
-        
-        //after
-        $this->executeAfter(self::$m_middleOK);
+        } else {
+            $getDirectOK = self::$m_router->checkReferer();
+        }
+
         self::$m_router->handleResponse($getDirectOK);
     }
 
@@ -51,7 +66,6 @@ class Container {
         return $middleOK;
     }
 
-
     private function executeAfter($i_middleOK)
     {
         if($i_middleOK) {
@@ -59,22 +73,21 @@ class Container {
         }
     }
 
-    static function connectDB()
+    public function connectDB()
     {
-        if(self::$m_db !== null) {
-            return self::$m_db;
+        if(self::$m_db === null) {
+            self::$m_db->connectDB();
         }
-        self::$m_db = DataBaseManager::connectDB();
     }
 
     //query実行
-    static function excuteSQL($i_sql, $i_data)
+    public function excuteSQL($i_sql, $i_data)
     {
         if(self::$m_db === null) {
-            self::connectDB();
+            self::$m_db->connectDB();
         }
-        $stmt = DataBaseManager::excuteSQL(self::$m_db, $i_sql, $i_data);
-        return $stmt;
+        $o_stmt = self::$m_db->excuteSQL(self::$m_db, $i_sql, $i_data);
+        return $o_stmt;
     }
 
     public function getRouter()

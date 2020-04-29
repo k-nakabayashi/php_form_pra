@@ -8,4 +8,8 @@ $baseDir = dirname($vendorDir);
 return array(
     'infru\\' => array($baseDir . '/system/infru'),
     'app\\' => array($baseDir . '/system/app'),
+    'Ray\\Aop\\' => array($vendorDir . '/ray/aop/src'),
+    'PhpParser\\' => array($vendorDir . '/nikic/php-parser/lib/PhpParser'),
+    'Doctrine\\Common\\Lexer\\' => array($vendorDir . '/doctrine/lexer/lib/Doctrine/Common/Lexer'),
+    'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib/Doctrine/Common/Annotations'),
 );

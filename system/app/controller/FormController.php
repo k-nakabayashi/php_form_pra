@@ -48,12 +48,11 @@ class FormController extends RootController {
 
     private function createUser()
     {
+        $o_resultOK = false;
+        
         $registerData = $this->m_formRequest->getParams();
-        $resultOK = $this->m_user->create($registerData);
-        if(!$resultOK) {
-            return false;
-        }
-        return true;
+        $o_resultOK = $this->m_user->create($registerData);
+        return $o_resultOK;
     }
     
     private function validate()

@@ -6,7 +6,9 @@
             "email": "user-test@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "ray/aop": "^2.0"
+    },
     "autoload": {
         "psr-4": {
             "infru\\": "system/infru/",

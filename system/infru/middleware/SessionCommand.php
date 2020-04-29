@@ -14,7 +14,7 @@ class SessionCommand extends MiddleWareCommand {
 
     public function handle()
     {
-        $resultOK = false;
+        // $o_resultOK = false;
         //設定
         $this->initializeSession();
         $this->setDatas();

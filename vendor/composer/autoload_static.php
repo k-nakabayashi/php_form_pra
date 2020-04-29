@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInite5ef30fd53d2cb8ab7976505e597297e
 {
+    public static $files = array (
+        '69a67b432adc06937bd2ba8c0399a44f' => __DIR__ . '/..' . '/ray/aop/annotation_loader.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'i' => 
         array (
@@ -14,6 +18,19 @@ class ComposerStaticInite5ef30fd53d2cb8ab7976505e597297e
         'a' => 
         array (
             'app\\' => 4,
+        ),
+        'R' => 
+        array (
+            'Ray\\Aop\\' => 8,
+        ),
+        'P' => 
+        array (
+            'PhpParser\\' => 10,
+        ),
+        'D' => 
+        array (
+            'Doctrine\\Common\\Lexer\\' => 22,
+            'Doctrine\\Common\\Annotations\\' => 28,
         ),
     );
 
@@ -26,35 +43,22 @@ class ComposerStaticInite5ef30fd53d2cb8ab7976505e597297e
         array (
             0 => __DIR__ . '/../..' . '/system/app',
         ),
-    );
-
-    public static $classMap = array (
-        'app\\Controller\\FormController' => __DIR__ . '/../..' . '/system/app/controller/FormController.php',
-        'app\\Controller\\RootController' => __DIR__ . '/../..' . '/system/app/controller/RootController.php',
-        'app\\domain\\Model' => __DIR__ . '/../..' . '/system/app/domain/model/Model.php',
-        'app\\domain\\User' => __DIR__ . '/../..' . '/system/app/domain/model/User.php',
-        'app\\http\\request\\FormRequest' => __DIR__ . '/../..' . '/system/app/http/request/FormRequest.php',
-        'app\\http\\request\\RootRequest' => __DIR__ . '/../..' . '/system/app/http/request/RootRequest.php',
-        'app\\http\\response\\JsonResponse' => __DIR__ . '/../..' . '/system/app/http/response/JsonResponse.php',
-        'app\\http\\response\\RootResponse' => __DIR__ . '/../..' . '/system/app/http/response/RootResponse.php',
-        'infru\\auth\\ApiAuth' => __DIR__ . '/../..' . '/system/infru/auth/ApiAuth.php',
-        'infru\\auth\\RootAuth' => __DIR__ . '/../..' . '/system/infru/auth/RootAuth.php',
-        'infru\\auth\\WebAuth' => __DIR__ . '/../..' . '/system/infru/auth/WebAuth.php',
-        'infru\\auth\\token\\AccessToken' => __DIR__ . '/../..' . '/system/infru/auth/token/AccessToken.php',
-        'infru\\auth\\token\\CsrfToken' => __DIR__ . '/../..' . '/system/infru/auth/token/CsrfToken.php',
-        'infru\\auth\\token\\RequestToken' => __DIR__ . '/../..' . '/system/infru/auth/token/RequestToken.php',
-        'infru\\auth\\token\\RootToken' => __DIR__ . '/../..' . '/system/infru/auth/token/RootToken.php',
-        'infru\\core\\Container' => __DIR__ . '/../..' . '/system/infru/core/Container.php',
-        'infru\\core\\DataBaseManager' => __DIR__ . '/../..' . '/system/infru/core/DataBaseManager.php',
-        'infru\\core\\Router' => __DIR__ . '/../..' . '/system/infru/core/Router.php',
-        'infru\\core\\UseCase' => __DIR__ . '/../..' . '/system/infru/core/UseCase.php',
-        'infru\\core\\UseCaseMiddleWare' => __DIR__ . '/../..' . '/system/infru/core/UseCaseMiddleWare.php',
-        'infru\\middleware\\Auth' => __DIR__ . '/../..' . '/system/infru/middleware/AuthComand.php',
-        'infru\\middleware\\CsrfCheckCommand' => __DIR__ . '/../..' . '/system/infru/middleware/CsrfCheckCommand.php',
-        'infru\\middleware\\CsrfCommand' => __DIR__ . '/../..' . '/system/infru/middleware/CsrfCommand.php',
-        'infru\\middleware\\MiddleWareCommand' => __DIR__ . '/../..' . '/system/infru/middleware/MiddleWareCommand.php',
-        'infru\\middleware\\SessionCommand' => __DIR__ . '/../..' . '/system/infru/middleware/SessionCommand.php',
-        'infru\\service\\MiddleWareService' => __DIR__ . '/../..' . '/system/infru/service/MiddleWareService.php',
+        'Ray\\Aop\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ray/aop/src',
+        ),
+        'PhpParser\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
+        ),
+        'Doctrine\\Common\\Lexer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/lexer/lib/Doctrine/Common/Lexer',
+        ),
+        'Doctrine\\Common\\Annotations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -62,7 +66,6 @@ class ComposerStaticInite5ef30fd53d2cb8ab7976505e597297e
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInite5ef30fd53d2cb8ab7976505e597297e::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInite5ef30fd53d2cb8ab7976505e597297e::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInite5ef30fd53d2cb8ab7976505e597297e::$classMap;
 
         }, null, ClassLoader::class);
     }

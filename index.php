@@ -1,5 +1,5 @@
 <?php
-//Main Role: Client
+//Main Role: Cotroller
 
 //初期設定
 require_once($_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php');
@@ -11,12 +11,15 @@ require_once(UTILITY_BASE.'Helper.php');
 
 //コンテナクラス起動し各種設定を行う
 //1. ルーティングマップ作成(複数のルート使う場合があるため全て設定する)
-//2. 該当ルート特定
-//3. ミドルウェア設定
-$app = createContainer();
+//2. ファイアウォール設定
+//3. 該当ルート特定
+//4. ミドルウェア設定
+$container = createContainer();
+
+$wirewallOK = $container->commandFirewall();
 
 //ルーティング
-$app->bootAction();
+$container->bootAction(true);
 
 //レスポンスしてexit
-$app->terminateAction();
+$container->terminateAction();

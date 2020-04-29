@@ -9,13 +9,13 @@ class  AuthenticateCommand extends MiddleWareCommand {
 
     public function handle()
     {
-        $resultOK = false;
+        $o_resultOK = false;
         $authStrategy = $this->getAuth();
-        $resultOK = $authStrategy->checkAuthentication();//main logic
-        if ($resultOK) {
+        $o_resultOK = $authStrategy->checkAuthentication();//main logic
+        if (!$o_resultOK) {
             $this->failed();
         }
-        return $resultOK;
+        return $o_resultOK;
     }
 
     private function getAuth ()
