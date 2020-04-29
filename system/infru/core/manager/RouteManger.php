@@ -6,9 +6,6 @@ namespace infru\core\manager;
 require_once($_SERVER['DOCUMENT_ROOT'].'/config/env.php');
 require_once(UTILITY_BASE.'Helper.php');
 use infru\support\factory\RootFactory;
-use app\http\request\RootRequest;
-use app\http\response\JsonResponse;
-use app\http\response\RootResponse;
 
 class RouteManger {
 
@@ -26,8 +23,8 @@ class RouteManger {
         self::$m_request = $factory->createItem('http\request\RootRequest');
         self::$m_response = $factory->createItem($this->getFormatedResonseName());
 
-        //Routing 順はこのまま
-        setRoutingMap();
+        //下記３行の順はこのまま維持。
+        setUseCaseList();//
         $this->setTargetUsecase();
         $this->setController(self::$m_targetUsecase->getUseCaseMap());
     }
@@ -35,7 +32,7 @@ class RouteManger {
     private function getFormatedResonseName() 
     {
         $o_className = null;
-        if($_REQUEST['route'] === 'api') {
+        if(getRequestRoot() === 'api') {
             $o_className = "http\\response\JsonResponse";
         }  else {
             $o_className = "http\\response\RootResponse";
@@ -102,6 +99,7 @@ class RouteManger {
         $pattern = $_SERVER['REDIRECT_URL'] !== null? 'REDIRECT_URL': 'REQUEST_URI';
         $usecaseName = $this->getUsecaseName($pattern);
         self::$m_targetUsecase = self::$m_usecaseList[$usecaseName];
+        
     }
 
     private function getUsecaseName($i_uriPattern) {

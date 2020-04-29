@@ -4,11 +4,12 @@
 namespace app\http\response;
 use app\http\response\RootResponse;
 
-require_once(RESPONSE_BASE.'Response.php');
-
 class JsonResponse extends RootResponse {
 
-    
+    // static $m_dataList = [
+    //     'params' => [],
+    //     'errors' => []
+    // ];
     public function returnResponse()
     {
         parent::setErrorMessages();

@@ -19,4 +19,9 @@ class RootRequest {
     public function failed() {
         self::$m_actionOK = false;
     }
+
+    public function getParams()
+    {
+        return self::$m_params;
+    }
 }

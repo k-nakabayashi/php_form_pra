@@ -1,6 +1,6 @@
 <?php
-namespace app\domain;
-use app\domain\Model;
+namespace app\domain\model;
+use app\domain\model\Model;
 
 class User extends Model {
     private $m_table = 'users';

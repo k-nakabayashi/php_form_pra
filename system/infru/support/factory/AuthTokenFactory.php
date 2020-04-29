@@ -4,11 +4,11 @@
 namespace infru\support\factory;
 use infru\support\factory\RootFactory;
 
-class AuthFactory extends RootFactory {
+class AuthTokenFactory extends RootFactory {
 
     public function __construct()
     {
-        parent::__construct('infru\firewall\\');
+        parent::__construct('infru\firewall\authToken\\');
     }
 
     protected function getFomartedClassPath($m_pattern)
@@ -17,9 +17,9 @@ class AuthFactory extends RootFactory {
 
         $path = null;
         if(getRequestRoot() === 'api') {
-            $path = $m_pattern."\ApiAuthWoker";
+            $path = $m_pattern."ApiToken";
         }  else {
-            $path = $m_pattern."\WebAuthWoker";
+            $path = $m_pattern."WebToken";
         }
 
         $o_classPath = $this->m_basePath.$path;

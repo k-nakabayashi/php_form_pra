@@ -13,11 +13,11 @@ function createContainer() {
 // DB
 function connectDB()
 {
-    return Container::$m_db->connectDB();
+    return Container::connectDB();
 }
 
 function excuteSQL($i_sql, $i_data) {
-    return Container::$m_db->excuteSQL($i_sql, $i_data);
+    return Container::excuteSQL($i_sql, $i_data);
 }
 
 //========================================
@@ -28,14 +28,19 @@ function getMiddleStatus() {
 
 //========================================
 // ルーティング
-function setRoutingMap()
+function setUseCaseList()
 {
-    
-    if($_REQUEST['route'] === 'api') {
+    if(getRequestRoot() === 'api') {
         require_once($_SERVER['DOCUMENT_ROOT'].'/usecase/api.php');
     }  else {
         require_once($_SERVER['DOCUMENT_ROOT'].'/usecase/web.php');
     } 
+}
+
+//どこからリクエストがきたか？を確認する
+function getRequestRoot ()
+{
+    return Container::$requestRoot;
 }
 //========================================
 // リクエスト
@@ -61,12 +66,12 @@ function getActionOK()
 
 function successed()
 {
-    RouteManger::$m_request::$m_actionOK = true;
+    RouteManger::$m_request->successed();
 }
 
 function failed()
 {
-    RouteManger::$m_request::$m_actionOK = false;
+    RouteManger::$m_request->failed();
 }
 
 //========================================

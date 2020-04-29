@@ -1,7 +1,8 @@
 <?php
-namespace infru\firewall\token;
+namespace infru\firewall\authToken;
 
-abstract class RootToken {
+abstract class AuthToken {
+
     abstract public function checkToken();
     abstract public function createToken();
 }

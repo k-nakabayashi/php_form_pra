@@ -2,7 +2,7 @@
 
 use infru\core\Container;
 use infru\core\manager\RouteManger;
-use infru\core\UseCaseMiddleWare;
+use infru\core\usecase\UseCaseMiddleWare;
 
 
 function getTargetMiddleWare() {

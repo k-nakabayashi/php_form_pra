@@ -1,8 +1,7 @@
 <?php
 namespace infru\firewall\token;
-use infru\auth\token\RootToken;
 
-class CsrfToken extends RootToken {
+class CsrfToken {
 
 
     public function checkToken()

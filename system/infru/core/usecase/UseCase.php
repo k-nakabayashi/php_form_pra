@@ -1,5 +1,5 @@
 <?php
-namespace infru\core;
+namespace infru\core\usecase;
 
 //Main Role: Contructor
 
@@ -7,7 +7,7 @@ namespace infru\core;
 require_once(UTILITY_BASE.'Helper.php');
 require_once(UTILITY_BASE.'Middleware.php');
 use infru\core\manager\RouteManger;
-use infru\core\UseCaseMiddleWare;
+use infru\core\usecase\UseCaseMiddleWare;
 
 class UseCase {
     //クエリからコントローラーに渡すデータ
@@ -31,9 +31,8 @@ class UseCase {
     public function __destruct()
     {
         $this->m_usecaseMap['middleWare']['single'] = $this->middleService->getMiddleSingle();
-        RouteManger::setUseCase(self::$_tmpName, $this);
+        RouteManger::setUseCase(self::$_tmpName, $this);//これがメイン
         self::$_tmpName = null;
-        // RouteManger::setRoutingMap($this->m_usecaseName, $this->m_usecaseMap);//これがメイン
     }
 
     public function withData($i_data)

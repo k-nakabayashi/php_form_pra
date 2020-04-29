@@ -6,16 +6,10 @@ use app\http\request\RootRequest;
 
 
 class FormRequest extends RootRequest {
-    private $m_params;
-    
-    public function __construct()
-    {
-        $this->m_params = getRequestParams();
-    }
 
     public function checkCsrfToken() {
         $o_resultOK = false;
-        $token = $this->m_params['csrf_token'];
+        $token = parent::$m_params['csrf_token'];
         $o_resultOK = false;
         return $o_resultOK;
     }
@@ -23,19 +17,19 @@ class FormRequest extends RootRequest {
     public function startValidate()
     {
         //名前
-        $resultOK = $this->validateName($this->m_params['name']);
+        $resultOK = $this->validateName(parent::$m_params['name']);
         if(!$resultOK) {
             return false;
         }
         
         //メール
-        $resultOK = $this->validateEmail($this->m_params['email']);
+        $resultOK = $this->validateEmail(parent::$m_params['email']);
         if(!$resultOK) {
             return false;
         }
         
         //パスワード
-        $resultOK = $this->validatePassword($this->m_params['password']);
+        $resultOK = $this->validatePassword(parent::$m_params['password']);
         if(!$resultOK) {
             return false;
         }
@@ -106,9 +100,4 @@ class FormRequest extends RootRequest {
         return true;
     }
 
-
-    public function getParams()
-    {
-        return $this->m_params;
-    }
 }

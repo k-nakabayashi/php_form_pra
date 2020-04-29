@@ -1,4 +1,6 @@
 <?php
+//main role : Factory, Service Provider 
+//pattern : Factory
 namespace infru\support\factory;
 
 class RootFactory {
@@ -10,7 +12,6 @@ class RootFactory {
         $this->m_basePath = $i_path;
     }
 
-
     protected function getFomartedClassPath($m_pattern)
     {
         $o_classPath = null;
@@ -20,7 +21,7 @@ class RootFactory {
     }
 
 //////// 以下 final ////////////////////////////////////////////////
-    final public function createItem($i_pattern, $i_params1 = null, ...$i_params2)
+    final public function createItem($i_pattern = null, $i_params1 = null, ...$i_params2)
     {
         $o_item = null;
         $i_classPath = $this->getFomartedClassPath($i_pattern);

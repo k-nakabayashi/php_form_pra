@@ -1,6 +1,6 @@
 <?php
 //main role : Information Holder
-namespace infru\core;
+namespace infru\core\usecase;
 
 class UseCaseMiddleWare {
 

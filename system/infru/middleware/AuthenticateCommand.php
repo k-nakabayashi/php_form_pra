@@ -38,7 +38,7 @@ class  AuthenticateCommand extends MiddleWareCommand {
     {
         $token = null;
         $clashPath = null;
-        if($_REQUEST['route'] === 'api') {
+        if(getRequestRoot() === 'api') {
             $clashPath = "infru\auth"."\\"."token\RequestToken";//AccessTokenはauthenctateで使う。
         }
 
@@ -50,7 +50,7 @@ class  AuthenticateCommand extends MiddleWareCommand {
 
         $auth = null;
         $clashPath = null;
-        if($_REQUEST['route'] === 'api') {
+        if(getRequestRoot() === 'api') {
             $clashPath = "infru\Auth\ApiAuth";
         }  else {
             $clashPath = "infru\Auth\WebAuth";

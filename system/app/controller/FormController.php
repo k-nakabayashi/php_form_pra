@@ -4,7 +4,7 @@ require_once(UTILITY_BASE.'Helper.php');
 
 use app\Controller\RootController;
 use app\http\request\FormRequest;
-use app\domain\User;
+use app\domain\model\User;
 
 //会員登録の処理
 class FormController extends RootController {
@@ -94,10 +94,14 @@ class FormController extends RootController {
         $data = null;
         if($duplicated === false) {
             $data = 'success';
+            successed();
         } else {
             $data = 'false';
+            failed();
+            global $err_msg;
+            $err_msg['message'] = MSG08;
         }
-        addResponseParams('result', $data);
+        addResponseParams('my_data', $data);
     }
 
 

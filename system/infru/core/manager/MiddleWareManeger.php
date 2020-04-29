@@ -115,6 +115,8 @@ class MiddleWareManeger {
 
     private function getSortedCommands($i_level, $i_MiddleWare, $i_timing, $i_configMiddle)
     {
+        $o_sortedCommands = null;
+
         $commandNameList = null;
         if($i_level === 'global') {
             $commandNameList = $i_MiddleWare[$i_timing];
@@ -123,15 +125,22 @@ class MiddleWareManeger {
             $targetMiddleware = $i_MiddleWare[$i_level][$i_timing];
             $commandNameList = $this->selectMiddleNames($targetMiddleware , $i_configMiddle);
         }
-        $sortedCommands = $this->getSortedCommandList($commandNameList, $i_configMiddle);
-        return $sortedCommands;
+        if (isset($commandNameList)) {
+            $o_sortedCommands = $this->getSortedCommandList($commandNameList, $i_configMiddle);
+        }
+
+        return $o_sortedCommands;
     }
 
     private function selectMiddleNames($i_tergetMiddlePare, $i_configMiddle)
     {
         $commandNameList = [];
+        if (empty($i_tergetMiddlePare)) {
+            return null;
+        }
         foreach($i_tergetMiddlePare as $middleName) {
-            $middleExitence = $i_configMiddle[$middleName];
+            
+            $middleExitence = array_key_exists($middleName, $i_configMiddle)? $i_configMiddle[$middleName] : null;
             if(!empty($middleExitence)) {
                 array_push($commandNameList, $middleName);
             }
