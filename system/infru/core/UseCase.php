@@ -2,15 +2,14 @@
 namespace infru\core;
 
 //Main Role: Contructor
-//Sub  Role: InformationHolder
 
 //Router.phpのroutingMapを作成する
 require_once(UTILITY_BASE.'Helper.php');
 require_once(UTILITY_BASE.'Middleware.php');
 use infru\core\Router;
-use infru\service\RouteMiddleWareService;
+use infru\core\UseCaseMiddleWare;
 
-class Route {
+class UseCase {
     //コントローラーに渡すデータ
     private $m_data;
 
@@ -18,20 +17,23 @@ class Route {
     private $middleService = null;
 
     //Router用
-    private $m_routingKey;
-    private $m_routingPare;
+    private static $_tmpName = null;
+    private $m_usecaseMap;
 
-    public function __construct($i_routingKey, $i_routeValue)
+    public function __construct($i_usecaseName, $i_usecaseMap)
     {
-        $this->middleService = new RouteMiddleWareService();
-        $this->m_routingPare = $i_routeValue;
-        $this->m_routingKey = $i_routingKey;
+        $this->middleService = new UseCaseMiddleWare();
+        self::$_tmpName = $i_usecaseName;
+        $this->m_usecaseMap = $i_usecaseMap;
+
     }
 
     public function __destruct()
     {
-        $this->m_routingPare['middleWare']['single'] = $this->middleService->getMiddleSingle();
-        Router::setRoutingMap($this->m_routingKey, $this->m_routingPare);//これがメイン
+        $this->m_usecaseMap['middleWare']['single'] = $this->middleService->getMiddleSingle();
+        Router::setUseCase(self::$_tmpName, $this);
+        self::$_tmpName = null;
+        // Router::setRoutingMap($this->m_usecaseName, $this->m_usecaseMap);//これがメイン
     }
 
     public function withData($i_data)
@@ -55,31 +57,32 @@ class Route {
 
 
     //以降、セッターとゲッター
+    public function getUseCaseMap()
+    {
+        return $this->m_usecaseMap;
+    }
+
     public function setRedirect($i_redirect)
     {
-        $this->m_routingPare['redirect'] = $i_redirect;
-        return $this;
+        $this->m_usecaseMap['redirect'] = $i_redirect;
+        return $this;//web.phpの中でメソドッチェーンをするため。
     }
 
     private static function createMyself(
-        $routingKey, $i_method = null, $i_ctrl = null, $i_action = null, $i_redirect = null
+        $usecaseName, $i_method = null, $i_ctrl = null, $i_action = null, $i_redirect = null
     )
     {
         $ctrl = self::getFormatedCtrl($i_ctrl);
-        $routingPare = self::getStructedRoutingPare($routingKey, $i_method, $ctrl, $i_action, $i_redirect);
-        $myself =  new Route($routingKey, $routingPare);
+        $routingPare = self::getStructedRoutingPare($i_method, $ctrl, $i_action, $i_redirect);
+        $myself =  new UseCase($usecaseName, $routingPare);
         return $myself;
     }
 
     private static function getStructedRoutingPare(
-        $routingKey, $i_method = 'GET',  
+        $i_method = 'GET',  
         $i_ctrl = null, $i_action = null, $i_redirect = null
     )
     {
-
-        if($routingKey === "root" ) {
-            $i_redirect = '/index.php';
-        }
 
         $o_routingPare = [
             'method' => $i_method,
@@ -106,7 +109,7 @@ class Route {
 
     public static function setWrapperMiddle($i_middleBefore = null, $i_middleAfter =null , $callBacks)
     {
-        RouteMiddleWareService::setWrapperMiddle($i_middleBefore, $i_middleAfter , $callBacks);
+        UseCaseMiddleWare::setWrapperMiddle($i_middleBefore, $i_middleAfter , $callBacks);
     }
 
     public function middleBefore($i_middleWare)

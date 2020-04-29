@@ -15,7 +15,6 @@ class MiddleWareService {
         $this->m_commandAfter = $this->setCommands('after');
     }
     
-
     public function executeBefore()
     {
         $resultOK = false;

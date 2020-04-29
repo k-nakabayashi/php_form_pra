@@ -1,8 +1,8 @@
 <?php
 namespace infru\core;
 
-//Main Role: Construtor
-//Sub  Role: Cordinator
+//Main Role: Cordinator
+//Sub  Role: Construtor
 use infru\core\Router;
 use infru\core\DataBaseManager;
 use infru\service\MiddleWareService;
@@ -13,16 +13,20 @@ class Container {
     static $m_middleOK = false;
     static $m_error;
     static $m_db = null;
+    public static $m_single = false;
 
     public function __construct()
     {
+        if (self::$m_single) {
+            return null;
+        }
+        self::$m_single = true;
         self::$m_router = new Router();
         self::$m_middleware = new MiddleWareService();
     }
 
     public function bootAction()
     {
-        //直リンク判定
 
         //before
         self::$m_middleOK = $this->executeBefore();
@@ -32,9 +36,13 @@ class Container {
         //after
         $this->executeAfter(self::$m_middleOK);
         self::$m_router->handleResponse($getDirectOK);
-        exit;
     }
 
+    public function terminateAction()
+    {
+        returnResponse();
+
+    }
 
     private function executeBefore()
     {

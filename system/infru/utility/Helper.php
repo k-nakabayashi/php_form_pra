@@ -30,9 +30,9 @@ function setRoutingMap()
 {
     
     if($_REQUEST['route'] === 'api') {
-        require_once($_SERVER['DOCUMENT_ROOT'].'/routes/api.php');
+        require_once($_SERVER['DOCUMENT_ROOT'].'/usecase/api.php');
     }  else {
-        require_once($_SERVER['DOCUMENT_ROOT'].'/routes/web.php');
+        require_once($_SERVER['DOCUMENT_ROOT'].'/usecase/web.php');
     } 
 }
 //========================================
@@ -99,6 +99,11 @@ function setResponseParams($i_array)
     Router::$m_response->setParams($i_array);
 }
 
+
+function returnResponse()
+{
+    Router::$m_response->returnResponse();
+}
 //========================================
 // その他
 function getInstanceByPath($i_classPath, $i_params1 = null, ...$i_params2) {

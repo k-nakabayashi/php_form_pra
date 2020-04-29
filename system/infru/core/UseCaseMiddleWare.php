@@ -1,7 +1,8 @@
 <?php
-namespace infru\service;
+//main role : Information Holder
+namespace infru\core;
 
-class RouteMiddleWareService {
+class UseCaseMiddleWare {
 
     //middleWare
     private static $m_wrapperMiddle = [

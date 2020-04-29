@@ -2,16 +2,12 @@
 
 use infru\core\Container;
 use infru\core\Router;
-use infru\Service\RouteMiddleWareService;
+use infru\core\UseCaseMiddleWare;
 
-require_once(INFRU_SERVICE.'RouteMiddleWareService.php');
 
 function getTargetMiddleWare() {
-    return Router::$m_targetRoute['middleWare'];
+    return Router::$m_targetRoute->getUseCaseMap()['middleWare'];
 }
 function getMiddleWrapper() {
-    return RouteMiddleWareService::getMiddleWrapper();
-}
-function getMiddleSingle() {
-    return RouteMiddleWareService::getMiddleSingle();
+    return UseCaseMiddleWare::getMiddleWrapper();
 }

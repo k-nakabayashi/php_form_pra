@@ -13,5 +13,6 @@ class JsonResponse extends RootResponse {
     {
         parent::setErrorMessages();
         echo json_encode(parent::$m_dataList);
+        exit;
     }
 }

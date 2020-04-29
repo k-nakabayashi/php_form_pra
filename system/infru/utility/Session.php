@@ -24,6 +24,7 @@ function checkReferer()
     return $refererOK;
 }
 
+//need to be Refatored
 function redirectPage($i_refererOK , $i_redirect)
 {
     if(!$i_refererOK) {

@@ -13,7 +13,7 @@ class Router {
 
     public static $m_request;
     public static $m_response;
-    public static $m_routingMap = [];
+    public static $m_usecaseList = [];
 
     static $m_targetRoute;
     private $m_controller = null;
@@ -27,7 +27,7 @@ class Router {
         //Routing 順はこのまま
         setRoutingMap();
         $this->setTargetRoute();
-        $this->setController(self::$m_targetRoute);
+        $this->setController(self::$m_targetRoute->getUseCaseMap());
     }
     
     private function setResonse() 
@@ -60,16 +60,10 @@ class Router {
 
     public function handleResponse($i_getDirectOK = false)
     {
-           
-        //直リンク
+        //直リンクの場合
         if($i_getDirectOK) {
-            $this->redirect();
-            exit;
+            $this->setRedirect();
         }
-
-        //アクション経由した場合
-        self::$m_response->returnResponse();
-        exit;
     }
 
 
@@ -84,14 +78,8 @@ class Router {
             return;
         }
 
-        $uri = self::$m_targetRoute['redirect'];
+        $uri = self::$m_targetRoute->getUseCaseMap()['redirect'];
         setResponseRedirect($uri);
-    }
-
-    private function redirect()
-    {
-        $this->setRedirect();
-        self::$m_response->returnResponse();
     }
 
 ///////////////////以降、セッターとゲッターか各種設定////////////////////////////////////////////
@@ -100,32 +88,32 @@ class Router {
         $i_routingPare = null;
         // $routingKey = basename($_SERVER['REDIRECT_URL']);
         $pattern = $_SERVER['REDIRECT_URL'] !== null? 'REDIRECT_URL': 'REQUEST_URI';
-        $routingKey = $this->getRoutingKey($pattern);
-        self::$m_targetRoute = self::$m_routingMap[$routingKey];
+        $usecaseName = $this->getUsecaseName($pattern);
+        self::$m_targetRoute = self::$m_usecaseList[$usecaseName];
 
     }
 
 
-    private function getRoutingKey($i_uriPattern) {
+    private function getUsecaseName($i_uriPattern) {
 
-        $o_routingKey = $_SERVER[$i_uriPattern];
+        $o_usecaseName = $_SERVER[$i_uriPattern];
        
-        if($o_routingKey !== "/") {
+        if($o_usecaseName !== "/") {
 
-            $initial = substr( $o_routingKey  , 0 , 1);
+            $initial = substr( $o_usecaseName  , 0 , 1);
              
             //階層構造があった時のため。
             if($initial === "/") {
-                $o_routingKey = ltrim($o_routingKey, "/");
-                $ctrlExistence = array_key_exists($o_routingKey, self::$m_routingMap);
+                $o_usecaseName = ltrim($o_usecaseName, "/");
+                $ctrlExistence = array_key_exists($o_usecaseName, self::$m_usecaseList);
 
                 if(!$ctrlExistence) {
-                    $o_routingKey = '404';
+                    $o_usecaseName = '404';
                 }
             }
         }
 
-        return $o_routingKey;
+        return $o_usecaseName;
     }
 
 
@@ -145,29 +133,26 @@ class Router {
         } else {
             //エラーページへ。
         }
-
     }
 
     private function createController($i_routingPare)
     {
-
         $controllerPath = ''.$i_routingPare['controller'];
         $controller = getInstanceByPath($controllerPath, $i_routingPare['action']);
         return $controller;
     }
 
 ///////////////////　ユーティリティ系　////////////////////////////////////////////
-    public static function setRoutingMap($i_key, $i_array)
+    public static function setUseCase($i_key, $i_usecaseObj)
     {
-        if(!isset(self::$m_routingMap[$i_key])) {
-            self::$m_routingMap[$i_key] = $i_array;
+        if(!isset(self::$m_usecaseList[$i_key])) {
+            self::$m_usecaseList[$i_key] = $i_usecaseObj;
         }
-        
     }
 
     public static function setRedirectForRoutingMap($i_uri, $i_redirect)
     {
-        self::$m_routingMap[$i_uri]['redirect'] = $i_redirect;
+        self::$m_usecaseList[$i_uri]->setRedirect($i_redirect);
     }
     
 

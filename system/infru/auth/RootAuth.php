@@ -18,11 +18,13 @@ abstract class RootAuth {
     //Template Method
     final public function checkAuthentication ()
     {
+        $reusltOK = false;
         $reusltOK = $this->checkCsrf();
 
         //サブクラスで実装
         $reusltOK = $this->checkToken();
         $reusltOK = $this->checkOther();
+        return $reusltOK;
     }
 
     abstract protected function checkOther();

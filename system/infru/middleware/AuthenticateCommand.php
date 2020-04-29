@@ -12,6 +12,9 @@ class  AuthenticateCommand extends MiddleWareCommand {
         $resultOK = false;
         $authStrategy = $this->getAuth();
         $resultOK = $authStrategy->checkAuthentication();//main logic
+        if ($resultOK) {
+            $this->failed();
+        }
         return $resultOK;
     }
 
