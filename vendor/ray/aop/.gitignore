@@ -1,7 +1,0 @@
-.idea
-composer.lock
-vendor
-build
-*.cache
-.DS_Store
-
