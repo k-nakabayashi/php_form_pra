@@ -16,25 +16,37 @@ InformaionHolder：
 Constructor：フィールドにObjectを持っている
 ServiceProvider：機能を提供する。Facadaとして使える？
 
----------------
-ServiceProviderは2種類
-・ServiceReturner
-・ServiceProcedure
--------------
-ServiceCenterは3種類
-ServiceCondinator：集中制御判断型
-ServiceController：委譲制御型
-ServiceAuto：分散処理型
---------------
+/////////////////////////////////////////////////
+interface ServiceProvider {
+
+}
+abstract class ServiceReturner implements ServiceProvider {
+
+}
+abstract class ServiceProcedure implements ServiceProvider {
+
+}
+/////////////////////////////////////////////////
+interface ServiceCenter {
+
+}
+abstract class ServiceCondinator implements ServiceCenter {
+  //集中制御判断型
+}
+abstract class ServiceController implements ServiceCenter {
+  //委譲制御型
+}
+abstract class ServiceIndepent implements ServiceCenter {
+  //分散処理型
+  //ServiceIndepentは特に下位の種類が決まっていない。
+  //自分たちで管理するため。
+}
+/////////////////////////////////////////////////
 ServiceCondinator?Controllerは2種類。単純すぎるのでCordinatorになる
 ServiceManager
 RouteBroker
---------------
-ServiceDespiraterは特に種類がない。
 
----------------
-
-ServiceManager→やりとげること→つまり、実行の成功・失敗が気になる
+//ServiceManager→やりとげること→つまり、実行の成功・失敗が気になる
 $ServiceManager->handle () {
   $result = false;
   $result = worker1->execute($result);
