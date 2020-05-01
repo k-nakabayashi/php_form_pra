@@ -1,0 +1,128 @@
+<?php
+
+Interface
+---------------
+
+ユースケースの達成は、上位を中心に考えます。
+上位が制御する責務を持ちます。
+上位は下位へ委譲し、下位はそれぞれの実行責務を持ちます
+
+上位：処理の制御を行う
+Cordinator：判断なし。
+Controller：判断あり
+
+下位
+InformaionHolder：
+Constructor：フィールドにObjectを持っている
+ServiceProvider：機能を提供する。Facadaとして使える？
+
+---------------
+ServiceProviderは2種類
+・ServiceReturner
+・ServiceProcedure
+-------------
+ServiceCenterは3種類
+ServiceCondinator：集中制御判断型
+ServiceController：委譲制御型
+ServiceAuto：分散処理型
+--------------
+ServiceCondinator?Controllerは2種類。単純すぎるのでCordinatorになる
+ServiceManager
+RouteBroker
+--------------
+ServiceDespiraterは特に種類がない。
+
+---------------
+
+ServiceManager→やりとげること→つまり、実行の成功・失敗が気になる
+$ServiceManager->handle () {
+  $result = false;
+  $result = worker1->execute($result);
+  $result = worker2->execute($result);
+  $result = worker3->execute($result);
+  return $result;
+}
+
+---------------------
+ServiceBroker→貿易人という語源→つまり、貿易の商品が気になる。
+?>
+<?php
+abstract class ServiceCenter {
+  final function deliate($workerArray, $value = null) {
+    for ($i = 0; $i < $workerArray.length(); $i ++ ) {
+      $value = $this->commandWoker($i, $workerArray[$i], $value);
+      if (!$value) {
+        break;
+      }
+    }
+    return $value;
+  }
+  final function commandWoker($i, $worker, $o_value) {
+    //初回は$valueの中身を無視して実行
+    if ($i !== 0) {
+      $o_value = $worker->execute($o_value);
+      return $o_value;
+    }
+
+    if (!$o_value) {
+      return $o_value;
+    }
+    $o_value = $worker->execute($o_value);
+    return $o_value;
+  }
+}
+class RouteBroker extends ServiceCenter {
+  // private $last_woker;
+  public function trade() {
+    $item = null;
+    $item = deliate([$worker_1, $worker_2, $worker_3], $item);
+    return $item;
+  }
+}
+
+
+
+
+
+
+
+-------------
+抽象度のレベル順
+
+＜高い＞
+handle
+
+＜低い＞
+excute
+
+ってことは、
+handle
+--execute
+--execute
+--execute
+かな？
+---------
+Service
+
+Service->execute();
+
+--------
+resultOK
+sequenseOK
+
+-----------------
+クラス名にデザインパターンの意味を込めるべきか？
+
+Context
+
+Component
+Composition
+Leaf
+
+Factory
+Product
+
+AbstractFactory
+AbstractProduct
+
+Command
