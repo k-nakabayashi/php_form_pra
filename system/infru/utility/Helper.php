@@ -28,13 +28,17 @@ function getMiddleStatus() {
 
 //========================================
 // ルーティング
-function setUseCaseList()
+function setUseCaseList($o_resultOK = false)
 {
+
     if(getRequestRoot() === 'api') {
         require_once($_SERVER['DOCUMENT_ROOT'].'/usecase/api.php');
+        $o_resultOK = true;
     }  else {
         require_once($_SERVER['DOCUMENT_ROOT'].'/usecase/web.php');
+        $o_resultOK = true;
     } 
+    return $o_resultOK;
 }
 
 //どこからリクエストがきたか？を確認する
@@ -121,4 +125,28 @@ function getInstanceByPath($i_classPath, $i_params1 = null, ...$i_params2) {
         return new $i_classPath();
     }
     return new $i_classPath($i_params1, $i_params2);
+}
+
+function deligate($resultOK = false, $i_func)
+{
+    $o_resultOK = $resultOK;
+    try {
+
+        if ($o_resultOK) {
+
+            $o_resultOK =  $i_func();
+
+            if ($o_resultOK !== null && gettype($o_resultOK) !== "boolean") {
+                $o_resultOK = true;
+                
+            } else if ($o_resultOK === null) {
+                $o_resultOK = true;
+            }
+        }
+
+    } catch (Exception $e) {
+        $o_resultOK = false;
+    }
+
+    return $o_resultOK;
 }

@@ -23,10 +23,18 @@ class RouteManger {
         self::$m_request = $factory->createItem('http\request\RootRequest');
         self::$m_response = $factory->createItem($this->getFormatedResonseName());
 
-        //下記３行の順はこのまま維持。
-        setUseCaseList();//
-        $this->setTargetUsecase();
-        $this->setController(self::$m_targetUsecase->getUseCaseMap());
+
+        //下記３行の順はこのまま維持
+        $sequenceOK = false;
+        $sequenceOK = deligate(true, function () {
+            return setUseCaseList();
+        });
+        $sequenceOK = deligate($sequenceOK, function () {
+            return $this->setTargetUsecase();
+        });
+        $sequenceOK = deligate($sequenceOK, function () {
+            return $this->setController(self::$m_targetUsecase->getUseCaseMap());
+        });
     }
     
     private function getFormatedResonseName() 
