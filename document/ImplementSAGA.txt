@@ -1,0 +1,55 @@
+Eventuate Tram Saga
+
+サービスクラスからSagaStateを設定し、SagaMangerからSagaオーケストレーターを作成
+Sagaオーケストレータのコンストラクタ内で、参加サービスを決め、SagaStateをさらに設定する。
+
+・ServiceクラスはSagaMangerＤＩを受ける
+・SagaオーケストレータはSagaStateＤＩを受け、
+　各サービスProxyを通してSagaStateの各チャネルを設定する(SagaDifinition)。
+・SagaStateはサービスのIDを持ち、各種実装コマンドを持つ。
+
+
+＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+Serviceクラス
+
+createXXで
+サービス_idとdetailを設定したSagaStateを作り
+・SagaManagerのcreate()に、SagaStateを入れて、Sagaオーケストレーターを作る
+===================================
+Sagaオーケストレーター：機能側？
+「概要」
+コンストラクタ内で
+メッセージやチャネルを設定している。
+SagaStateの中で、具体的な処理をしている。(コマンドメッセージ)
+※Brigdeパターンか？
+
+「処理」
+
+・シングルトン
+・stateを持つ
+
+各プロキシをコンストラクタで使う。
+コンストラクタで、必要なサービスを参加させる。
+
+.step()
+ .invokeParticipant(チャネル、コマンド)
+　※次のトランザクションを指定
+
+ .onReply(プロキシ.class, コマンド)
+　※現行処理が成功した時のコマンド
+
+ .withCompensation(プロキシ.cancel, コマンド)
+　※失敗したとき
+
+
+※チャネル = 各サービスProxy.create();
+※コマンドメッセージ = SagaDefinitio<特定のSagaState>::makeCreate--Command
+※.withCompensationのチャネルは、各サービスProxy.createの指定先
+
+この一連のサービス登録がフィールのSagaDifinitionになる
+
+==========================================================================
+SagaState：実装側？
+サービスＩＤを持つ
+
+コマンドの中身を決める
