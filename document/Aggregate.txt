@@ -1,0 +1,44 @@
+Aggregate 
+エンティティのグループみたいな感じ
+
+Aggregate Rootと複数のValue Objectで構成される。
+RootがValue Objectを保持している。
+
+Order
+ PaymaentInfo
+ DeliverInfo,
+
+①Value Objectへのアクセスするメソッドを持つ
+※サービスはValue Objectへの直接アクセスは不可であり、
+　Aggregate Rootのメソッド使う。
+　サービスはRepogitoryを経由して、Aggregate Rootを取得する。
+
+②Aggregate間の参照は主キー
+オブジェクト参照は不可。疎結合にする
+
+③１つのTransactionで１つのAggregate
+
+
+④できるだけ粒度は小さく。
+
+
+
+＝＝＝＝＝＝＝＝＝＝＝＝＝
+Aggregateを使ったビジネスロジック設計
+・サービス
+・レポジトリ
+・アグリゲート
+・サーガ
+・ドメインイベント
+
+
+ドメインイベント
+アグリゲートが自分に起きたことをイベントで知らせる(publish)
+
+イベント発行
+・アグリゲートのメソッドがイベントをreturn
+・サービスがそのreturn を使ってdomainEventPublisher.publish(色々)でパブリッシュ
+
+DomainEventPublisher
+
+
